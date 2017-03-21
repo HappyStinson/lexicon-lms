@@ -16,6 +16,9 @@ namespace Lexicon_LMS.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        // Navigation property
+        public virtual Course Course { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -24,6 +27,8 @@ namespace Lexicon_LMS.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Course> Courses { get; set; }
 
         public static ApplicationDbContext Create()
         {
