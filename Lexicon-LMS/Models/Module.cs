@@ -28,7 +28,7 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Slutdatum")]
         [Required(ErrorMessage = "Du måste ange modulens slutdatum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]        
         public DateTime EndDate { get; set; }      
       
     

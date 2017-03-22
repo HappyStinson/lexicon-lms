@@ -50,6 +50,11 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
+            if (module.StartDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa efter Startdatum");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
@@ -84,6 +89,11 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
+            if (module.StartDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa efter Startdatum");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(module).State = EntityState.Modified;
