@@ -25,7 +25,8 @@ namespace Lexicon_LMS.Models
         [Required(ErrorMessage = "Du måste ange kursens slutdatum")]
         public DateTime EndDate { get; set; }
 
-        // Navigation property
+        // Navigation properties
         public virtual ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }
