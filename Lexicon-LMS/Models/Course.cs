@@ -20,13 +20,13 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Startdatum")]
         [Required(ErrorMessage = "Du måste ange kursens startdatum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:YYYY-MM-DD}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Slutdatum")]
         [Required(ErrorMessage = "Du måste ange kursens slutdatum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:YYYY-MM-DD}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         // Navigation properties
