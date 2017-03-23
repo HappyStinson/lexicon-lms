@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
 
@@ -15,9 +11,18 @@ namespace Lexicon_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult Index(Course course)
         {
-            return View(db.Courses.ToList());
+            if (!string.IsNullOrEmpty(course.Name))
+                return View(course);
+
+            ModelState.Clear();
+            return View();
+        }
+
+        public ActionResult ListCourses()
+        {
+            return PartialView("_ListAllPartialView", db.Courses.ToList());
         }
 
         // GET: Courses/Details/5
@@ -47,7 +52,19 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        {        
+
+            // Check if course with this Name already exist            
+            if (db.Courses.Any(c => c.Name == course.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");
+            }
+
+            if (course.StartDate.CompareTo(course.EndDate) == 1)
+            {              
+                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -55,7 +72,7 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return RedirectToAction("Index", course);
         }
 
         // GET: Courses/Edit/5
@@ -80,6 +97,11 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
         {
+            if (course.StartDate.CompareTo(course.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan Startdatum");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;

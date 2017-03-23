@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModulesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -181,11 +182,24 @@
     <Compile Include="Migrations\201703210921305_Initial.Designer.cs">
       <DependentUpon>201703210921305_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703221255431_ModellModule.cs" />
+    <Compile Include="Migrations\201703221255431_ModellModule.Designer.cs">
+      <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.cs" />
+    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.Designer.cs">
+      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.cs" />
+    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.Designer.cs">
+      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -248,6 +262,12 @@
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Modules\Create.cshtml" />
+    <Content Include="Views\Modules\Delete.cshtml" />
+    <Content Include="Views\Modules\Details.cshtml" />
+    <Content Include="Views\Modules\Edit.cshtml" />
+    <Content Include="Views\Modules\Index.cshtml" />
+    <Content Include="Views\Courses\_ListAllPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -266,6 +286,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703210921305_Initial.resx">
       <DependentUpon>201703210921305_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703221255431_ModellModule.resx">
+      <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703211345296_Increase-StringLength-CourseName.resx">
+      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703230817326_PendingChangeMergeModule.resx">
+      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

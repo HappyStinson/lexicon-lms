@@ -1,15 +1,23 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@model Lexicon_LMS.Models.Module
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Modul - Detaljer";
 }
 
-<h2>Kurs - <strong><u>ta bort</u></strong></h2>
+<h2>Modul - <u>Detaljer</u></h2>
 
-<h3>Är du säker på att du vill ta bort denna kurs?</h3>
 <div>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -43,13 +51,8 @@
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till kursöversikten", "Index")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka till Modulöversikten", "Index")
+</p>

@@ -1,10 +1,10 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@model Lexicon_LMS.Models.Module
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Kurs - <strong><u>ändra</u></strong></h2>
+<h2>Modul - <u>Ändra</u></h2>
 
 
 @using (Html.BeginForm())
@@ -12,6 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -49,6 +50,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.CourseId, "Kurs", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Spara" class="btn btn-default" />
             </div>
@@ -57,7 +66,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+    @Html.ActionLink("Tillbaka till Modulöversikten", "Index")
 </div>
 
 @section Scripts {

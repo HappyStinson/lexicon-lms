@@ -1,36 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace Lexicon_LMS.Models
 {
-    public class Course
+    public class Module
     {
         public int Id { get; set; }
 
-        [Display(Name = "Kursnamn")]
+        [Display(Name = "Modulnamn")]
         [Required(ErrorMessage = "Du måste ange kursens namn")]
         [StringLength(50, ErrorMessage = "Namnet kan inte vara längre än 50 tecken")]
         public string Name { get; set; }
 
-        [Display(Name = "Kursbeskrivning")]
+        [Display(Name = "Modulbeskrivning")]
         [StringLength(500, ErrorMessage = "Beskrivningen kan inte vara mer än 500 tecken")]
         public string Description { get; set; }
 
         [Display(Name = "Startdatum")]
-        [Required(ErrorMessage = "Du måste ange kursens startdatum")]
+        [Required(ErrorMessage = "Du måste ange modulens startdatum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}",ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Slutdatum")]
-        [Required(ErrorMessage = "Du måste ange kursens slutdatum")]
+        [Required(ErrorMessage = "Du måste ange modulens slutdatum")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]        
+        public DateTime EndDate { get; set; }      
+      
+    
+        public int CourseId { get; set; }
 
-        // Navigation properties
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-        public virtual ICollection<Module> Modules { get; set; }
+        // Navigation property    
+        public virtual Course Course { get; set; }
+
     }
 }

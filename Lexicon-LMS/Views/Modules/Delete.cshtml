@@ -1,15 +1,24 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@model Lexicon_LMS.Models.Module
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Ta bort";
 }
 
-<h2>Kurs - <strong><u>ta bort</u></strong></h2>
+<h2>Modul - <u>Ta bort</u></h2>
 
-<h3>Är du säker på att du vill ta bort denna kurs?</h3>
+<h3>Är du säker på att du vill ta bort Modulen ?</h3>
 <div>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -49,7 +58,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+            @Html.ActionLink("Tillbaka till Modulöversikten", "Index")
         </div>
     }
 </div>

@@ -4,12 +4,14 @@
     ViewBag.Title = "Details";
 }
 
+<h2>Kurs - <strong><u>detaljer</u></strong></h2>
 <h2>
     Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
-
 </h2>
 
-    <h4></h4>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
     <hr />
 
@@ -72,10 +74,9 @@
 
         </div>
 
-
-    <p>
-        <br />
-
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+</p>
