@@ -83,6 +83,19 @@ footer{
        color: #8eff96;
 }
 
+
+.col-sm-12 {
+    padding-left: 0;
+}
+
+.panel-group{
+      margin: 0;
+    padding: 0;
+}
+.panel-default{
+    margin: 0;
+    padding: 0;
+}
 #accordion{
     
     padding: -15px;/*för att få accordion indraget*/
