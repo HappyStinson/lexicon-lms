@@ -10,7 +10,7 @@ namespace Lexicon_LMS.Models
 
         [Display(Name = "Kursnamn")]
         [Required(ErrorMessage = "Du måste ange kursens namn")]
-        [StringLength(20, ErrorMessage = "Namnet kan inte vara längre än 20 tecken")]
+        [StringLength(50, ErrorMessage = "Namnet kan inte vara längre än 50 tecken")]
         public string Name { get; set; }
 
         [Display(Name = "Kursbeskrivning")]

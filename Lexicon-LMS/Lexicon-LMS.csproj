@@ -186,6 +186,14 @@
     <Compile Include="Migrations\201703221255431_ModellModule.Designer.cs">
       <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.cs" />
+    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.Designer.cs">
+      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.cs" />
+    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.Designer.cs">
+      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
@@ -259,6 +267,7 @@
     <Content Include="Views\Modules\Details.cshtml" />
     <Content Include="Views\Modules\Edit.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
+    <Content Include="Views\Courses\_ListAllPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -280,6 +289,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703221255431_ModellModule.resx">
       <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703211345296_Increase-StringLength-CourseName.resx">
+      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703230817326_PendingChangeMergeModule.resx">
+      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
