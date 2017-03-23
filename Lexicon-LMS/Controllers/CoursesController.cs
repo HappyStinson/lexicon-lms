@@ -6,6 +6,7 @@ using Lexicon_LMS.Models;
 
 namespace Lexicon_LMS.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -41,6 +42,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "teacher")]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +51,7 @@ namespace Lexicon_LMS.Controllers
         // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
@@ -76,6 +79,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,6 +97,7 @@ namespace Lexicon_LMS.Controllers
         // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
@@ -112,6 +117,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,6 +133,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // POST: Courses/Delete/5
+        [Authorize(Roles = "teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

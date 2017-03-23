@@ -174,25 +174,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703210858349_InitialCreate.cs" />
-    <Compile Include="Migrations\201703210858349_InitialCreate.Designer.cs">
-      <DependentUpon>201703210858349_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201703231428167_seed6.cs" />
+    <Compile Include="Migrations\201703231428167_seed6.Designer.cs">
+      <DependentUpon>201703231428167_seed6.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703210921305_Initial.cs" />
-    <Compile Include="Migrations\201703210921305_Initial.Designer.cs">
-      <DependentUpon>201703210921305_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703221255431_ModellModule.cs" />
-    <Compile Include="Migrations\201703221255431_ModellModule.Designer.cs">
-      <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.cs" />
-    <Compile Include="Migrations\201703211345296_Increase-StringLength-CourseName.Designer.cs">
-      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.cs" />
-    <Compile Include="Migrations\201703230817326_PendingChangeMergeModule.Designer.cs">
-      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
+    <Compile Include="Migrations\201703231437038_seed8.cs" />
+    <Compile Include="Migrations\201703231437038_seed8.Designer.cs">
+      <DependentUpon>201703231437038_seed8.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -281,20 +269,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703210858349_InitialCreate.resx">
-      <DependentUpon>201703210858349_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703231428167_seed6.resx">
+      <DependentUpon>201703231428167_seed6.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703210921305_Initial.resx">
-      <DependentUpon>201703210921305_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703221255431_ModellModule.resx">
-      <DependentUpon>201703221255431_ModellModule.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703211345296_Increase-StringLength-CourseName.resx">
-      <DependentUpon>201703211345296_Increase-StringLength-CourseName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703230817326_PendingChangeMergeModule.resx">
-      <DependentUpon>201703230817326_PendingChangeMergeModule.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703231437038_seed8.resx">
+      <DependentUpon>201703231437038_seed8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

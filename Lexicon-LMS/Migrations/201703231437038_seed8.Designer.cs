@@ -7,13 +7,13 @@ namespace Lexicon_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class IncreaseStringLengthCourseName : IMigrationMetadata
+    public sealed partial class seed8 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(IncreaseStringLengthCourseName));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(seed8));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703211345296_Increase-StringLength-CourseName"; }
+            get { return "201703231437038_seed8"; }
         }
         
         string IMigrationMetadata.Source

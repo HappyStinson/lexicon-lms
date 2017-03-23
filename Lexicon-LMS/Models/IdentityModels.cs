@@ -28,12 +28,63 @@ namespace Lexicon_LMS.Models
         {
         }
 
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<Module> Modules { get; set; }
+        public DbSet<Models.Course> Courses { get; set; }
+        public DbSet<Models.Module> Modules { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        /*
+        protected override void Seed(Lexicon_LMS.Models.ApplicationDbContext context)
+        {
+            var roleStore = new RoleStore<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(context);
+            var roleManager = new Microsoft.AspNet.Identity.RoleManager<IdentityRole>(roleStore);
+            var roleNames = new string[] { "teacher", "student" };
+            foreach (var roleName in roleNames)
+            {
+                if (!context.Roles.Any(r => r.Name == roleName))
+                {
+                    var role = new IdentityRole { Name = roleName };
+                    var result = roleManager.Create(role);
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+                    }
+                }
+            }
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+
+            var emails = new[] { "dimitris@lxicon.se", "dtrump@lexicon.se" };
+            foreach (var email in emails)
+            {
+                if (!context.Users.Any(u => u.UserName == email))
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                    };
+                    var result = userManager.Create(user, "foobar");
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(string.Join("\n", result.Errors));
+
+                    }
+                }
+            }
+
+            var adminUser = userManager.FindByName("dimitris@lxicon.se");
+            userManager.AddToRole(adminUser.Id, "teacher");
+
+            var editorUser = userManager.FindByName("dtrump@lxicon.se");
+            userManager.AddToRole(editorUser.Id, "student");
+        }
+        */
+
     }
+    
 }
