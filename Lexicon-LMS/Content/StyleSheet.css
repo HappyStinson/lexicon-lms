@@ -1,0 +1,86 @@
+﻿body{
+  
+    padding-top: 150px; /*50px*/
+    padding-bottom: 0;  /*20px*/
+
+    margin-bottom:0;
+}
+
+@media screen and (min-width: 1240px) {
+
+    div.botbar {
+        margin-top: 60px;
+
+           margin-bottom:0;
+    }
+}
+@media screen and (min-width: 988px) {
+
+    div.botbar {
+        margin-top: 50px;
+        padding-bottom: 50px;
+
+        margin-bottom:0;
+    }
+}
+
+div.botbar {
+    font-family: "Whitney SSm A","Whitney SSm B",arial,sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    background-color: #202020;
+    position: relative;
+
+    width:100%;
+    background-size: auto 110px;
+    margin-bottom:0;
+    margin-right:10px;
+
+}
+
+footer{
+    position: fixed;   
+    bottom: 0;
+    /*opacity: .3;*/
+    color: black;
+
+    z-index: 2147483638;
+
+     width:100%;
+}
+/*footer p{
+  margin-left:35%;
+}*/
+
+
+/*navigering lexicon style*/
+
+@media print, screen and (min-width: 768px) {
+    #nav {
+        position: relative;
+        padding: 19px 15px 47px 15px;
+        display: block !important;
+    }
+}
+
+#nav {
+    float: left;
+    width: 100%;
+    padding: 10px 12px 20px 12px;
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #808080;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: none;
+}
+@media screen and (min-width: 988px) {
+        nav[role="navigation"] {
+        margin-right: -15px;
+    }
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+       color: #8eff96;
+}
