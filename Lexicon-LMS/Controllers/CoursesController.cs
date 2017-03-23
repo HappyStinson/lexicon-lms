@@ -52,10 +52,17 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
-        {
+        {        
+
+            // Check if course with this Name already exist            
+            if (db.Courses.Any(c => c.Name == course.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");
+            }
+
             if (course.StartDate.CompareTo(course.EndDate) == 1)
             {              
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan Startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
             }
 
             if (ModelState.IsValid)

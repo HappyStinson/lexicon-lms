@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.Course>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -35,10 +32,10 @@
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
-            @Html.ActionLink("Lägg till modul", "Create", "Modules", new { courseId = item.Id }, new { @class="btn btn-default btn-xs" })
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Lägg till modul", "Create", "Modules", new { courseId = item.Id }, new { @class = "btn btn-default btn-xs" })
+            @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Detaljer", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
         </td>
     </tr>
 }
