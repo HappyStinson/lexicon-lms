@@ -1,5 +1,6 @@
 ﻿@model Lexicon_LMS.Models.Course
 
+
 @{
     ViewBag.Title = "Details";
 }
@@ -9,73 +10,54 @@
     Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
 </h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+<hr />
 
-    <hr />
 
-   
-        <h4>
-            Pågående Aktivitet
-        </h4>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
+<h4>
+    Pågående Aktivitet
+</h4>
+<dt>
+    @Html.DisplayNameFor(model => model.StartDate)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.StartDate)
+</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
+<dt>
+    @Html.DisplayNameFor(model => model.EndDate)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-  
+<dd>
+    @Html.DisplayFor(model => model.EndDate)
+</dd>
 
-  
-        <h4>
-            Kursmoduler
-        </h4>      
-     
+<h4>
+    Kursmoduler
+</h4>
 
-        <div class="col-sm-12">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-          
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                Frontend med  Java
-                            </a>
-                        </h4>
-                    </div>
-               
-  
-                    <div id="collapse1" class="panel-collapse collapse">
-                        <h4>Beskrivning av kursmodulen "Frontend med  Java"</h4>
+    @foreach (var item in Model.Modules)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
 
-                        Frontend med  Java
-                        Kursen fokuserar på att använda HTML5/CSS3/JavaScript att genomföra programmering logik, definiera och använda variabler, kan utföra loopa och förgrening, utveckla användargränssnitt, fånga och validera användarinmatning, lagra data och skapa välstrukturerade program.
-
-                       
-                    </div>
-                 
-                </div>
-                <div class="col-sm-2">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
+                        @item.Name
+                    </a>
+                </h4>
+            </div>
+            <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                <div class="panel-body">
+                    @item.Description
                 </div>
             </div>
-            <div class="col-sm-2">
-            </div>
-
         </div>
-
-    </dl>
+    }
 </div>
+
 <p>
     @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Tillbaka till kursöversikten", "Index")
