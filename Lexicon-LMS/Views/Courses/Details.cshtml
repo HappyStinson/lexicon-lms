@@ -5,7 +5,7 @@
 }
 
 <h2>
-    Detaljerad Kursinformation för @Html.DisplayFor(model => model.Name)
+    Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
 
 </h2>
 
@@ -34,10 +34,11 @@
         </dd>
   
 
-    <div class="container">
+  
         <h4>
             Kursmoduler
         </h4>      
+     
 
         <div class="col-sm-12">
 
@@ -47,35 +48,29 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-
-                                @Html.DisplayFor(model => model.Name)
+                                Frontend med  Java
                             </a>
                         </h4>
                     </div>
                
   
                     <div id="collapse1" class="panel-collapse collapse">
-                        <h4>Beskrivning av kursmodulen "@Html.DisplayFor(model => model.Name)"</h4>
+                        <h4>Beskrivning av kursmodulen "Frontend med  Java"</h4>
 
-                        @Html.DisplayFor(model => model.Name)
-                        @Html.DisplayFor(model => model.Description)
+                        Frontend med  Java
+                        Kursen fokuserar på att använda HTML5/CSS3/JavaScript att genomföra programmering logik, definiera och använda variabler, kan utföra loopa och förgrening, utveckla användargränssnitt, fånga och validera användarinmatning, lagra data och skapa välstrukturerade program.
 
-                        <h4>Aktiviteter</h4>
-                        <a href=" ">Föreläsning1 || @Html.DisplayFor(model => model.Name)</a><br />
-                        <a href=" ">Föreläsning2 || @Html.DisplayFor(model => model.Name)</a>
+                       
                     </div>
                  
                 </div>
                 <div class="col-sm-2">
-
-
                 </div>
             </div>
             <div class="col-sm-2">
             </div>
 
         </div>
-    </div>
 
 
     <p>

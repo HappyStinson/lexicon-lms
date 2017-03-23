@@ -82,3 +82,8 @@ footer{
 .navbar-inverse .navbar-nav > li > a {
        color: #8eff96;
 }
+
+#accordion{
+    
+    padding: -15px;/*för att få accordion indraget*/
+}
