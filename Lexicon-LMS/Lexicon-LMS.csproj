@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201703231437038_seed8.Designer.cs">
       <DependentUpon>201703231437038_seed8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703231256307_init3.cs" />
+    <Compile Include="Migrations\201703231256307_init3.Designer.cs">
+      <DependentUpon>201703231256307_init3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
@@ -274,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703231437038_seed8.resx">
       <DependentUpon>201703231437038_seed8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703231256307_init3.resx">
+      <DependentUpon>201703231256307_init3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

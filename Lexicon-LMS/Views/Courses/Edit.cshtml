@@ -56,6 +56,33 @@
     </div>
 }
 
+<h4>
+  Kursmoduler
+</h4>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+  @foreach (var item in Model.Modules)
+  {
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
+              @item.Name
+            </a>
+            @Html.ActionLink("Ändra modul", "Edit", "Modules", new { id = item.Id }, new { @class = "btn btn-default btn-xs" })
+          </h4>
+        </div>
+        <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+          <div class="panel-body">
+            @item.Description
+          </div>
+        </div>
+      </div>
+  }
+</div>
+
 <div>
     @Html.ActionLink("Tillbaka till kursöversikten", "Index")
 </div>

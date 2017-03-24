@@ -1,48 +1,63 @@
 ﻿@model Lexicon_LMS.Models.Course
 
+
 @{
     ViewBag.Title = "Details";
 }
 
 <h2>Kurs - <strong><u>detaljer</u></strong></h2>
+<h2>
+    Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
+</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<hr />
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+<h4>
+    Pågående Aktivitet
+</h4>
+<dt>
+    @Html.DisplayNameFor(model => model.StartDate)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.StartDate)
+</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
+<dt>
+    @Html.DisplayNameFor(model => model.EndDate)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.EndDate)
+</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
+<h4>
+    Kursmoduler
+</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-    </dl>
+    @foreach (var item in Model.Modules)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
+                        @item.Name
+                    </a>
+                </h4>
+            </div>
+            <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                <div class="panel-body">
+                    @item.Description
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
 <p>
     @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Tillbaka till kursöversikten", "Index")

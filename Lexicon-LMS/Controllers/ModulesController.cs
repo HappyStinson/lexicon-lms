@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
 
@@ -38,10 +34,10 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: Modules/Create
-        [Authorize(Roles = "teacher")]
-        public ActionResult Create()
+        [Authorize(Roles = "teacher")]   
+        public ActionResult Create(int? courseId)
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", courseId);
             return View();
         }
 
@@ -91,7 +87,7 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Courses", new { id = module.CourseId });
             }
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
@@ -154,7 +150,7 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "Courses", new { id = module.CourseId });
             }
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
             return View(module);
