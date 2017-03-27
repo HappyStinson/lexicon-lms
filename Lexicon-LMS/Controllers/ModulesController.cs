@@ -181,7 +181,7 @@ namespace Lexicon_LMS.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "Courses", new { id = module.CourseId });
         }
 
         protected override void Dispose(bool disposing)

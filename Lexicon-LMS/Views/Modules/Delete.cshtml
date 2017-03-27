@@ -6,7 +6,7 @@
 
 <h2>Modul - <u>Ta bort</u></h2>
 
-<h3>Är du säker på att du vill ta bort Modulen ?</h3>
+<h3>Är du säker på att du vill ta bort modulen?</h3>
 <div>
     <h4></h4>
     <hr />
@@ -57,8 +57,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
-            @Html.ActionLink("Tillbaka till Modulöversikten", "Index")
+            <input type="submit" value="Ta bort" class="btn btn-danger" />
+            @Html.ActionLink("Tillbaka till kursens editeringsvy", "Edit", "Courses", new { id = Model.CourseId }, null)
         </div>
     }
 </div>
