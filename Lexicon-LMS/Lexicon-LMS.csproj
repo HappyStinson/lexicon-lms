@@ -188,6 +188,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
