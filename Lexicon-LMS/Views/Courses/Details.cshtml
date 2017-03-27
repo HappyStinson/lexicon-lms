@@ -12,53 +12,54 @@
 
 <hr />
 
+    <div class="col-md-4">
+        <h4>
+            Pågående Aktivitet
+        </h4>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate) - @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
 
-<h4>
-    Pågående Aktivitet
-</h4>
-<dt>
-    @Html.DisplayNameFor(model => model.StartDate)
-</dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <br />
 
-<dd>
-    @Html.DisplayFor(model => model.StartDate)
-</dd>
 
-<dt>
-    @Html.DisplayNameFor(model => model.EndDate)
-</dt>
+        <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd>@Html.DisplayFor(model => model.Description)</dd>
+        <br />
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+        <h4>Kursmoduler</h4>
 
-<dd>
-    @Html.DisplayFor(model => model.EndDate)
-</dd>
+        @foreach (var item in Model.Modules)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
 
-<h4>
-    Kursmoduler
-</h4>
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
+                            @item.Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel-body">
 
-    @foreach (var item in Model.Modules)
-    {
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
+                        Modulbeskrivning: @Html.DisplayFor(modelItem => item.Description)<br />
+                        Modulstart: @Html.DisplayFor(modelItem => item.StartDate)  Modulavslut: @Html.DisplayFor(modelItem => item.EndDate)<br />
 
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
-                        @item.Name
-                    </a>
-                </h4>
-            </div>
-            <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
-                <div class="panel-body">
-                    @item.Description
+                    </div>
+
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
 
-<p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Tillbaka till kursöversikten", "Index")
-</p>
+        <p>
+            @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+        </p>
+    </div>
