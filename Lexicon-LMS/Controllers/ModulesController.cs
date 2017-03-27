@@ -37,8 +37,19 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = "teacher")]   
         public ActionResult Create(int? courseId)
         {
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", courseId);
-            return View();
+            if (courseId != null)
+            {
+                var courseName = db.Courses.FirstOrDefault(c => c.Id == courseId).Name;
+                if (!string.IsNullOrEmpty(courseName))
+                    ViewBag.CourseName = courseName;
+
+                var model = new Module { CourseId = (int)courseId };
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Courses", null);
+            }
         }
 
         // POST: Modules/Create
@@ -52,7 +63,7 @@ namespace Lexicon_LMS.Controllers
             // Check if module with this Name already exist            
             if (db.Modules.Any(m => m.Name == module.Name))
             {
-                ModelState.AddModelError("Name", "Det finns redan en modul med detta Modulnamn");
+                ModelState.AddModelError("Name", "Det finns redan en modul med detta modulnamn");
             }
 
             if (module.StartDate.CompareTo(module.EndDate) == 1)
@@ -90,7 +101,6 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Details", "Courses", new { id = module.CourseId });
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
             return View(module);
         }
 
