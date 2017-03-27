@@ -60,6 +60,11 @@ namespace Lexicon_LMS.Controllers
                 ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
             }
 
+            if (activity.StartDate.CompareTo(activity.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
