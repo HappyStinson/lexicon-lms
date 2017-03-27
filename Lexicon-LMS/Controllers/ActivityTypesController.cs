@@ -10,6 +10,7 @@ using Lexicon_LMS.Models;
 
 namespace Lexicon_LMS.Controllers
 {
+    [Authorize]
     public class ActivityTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -35,6 +36,7 @@ namespace Lexicon_LMS.Controllers
             return View(activityType);
         }
 
+        [Authorize(Roles = "teacher")]
         // GET: ActivityTypes/Create
         public ActionResult Create()
         {
@@ -44,6 +46,7 @@ namespace Lexicon_LMS.Controllers
         // POST: ActivityTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] ActivityType activityType)
@@ -59,6 +62,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: ActivityTypes/Edit/5
+        [Authorize(Roles = "teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +80,7 @@ namespace Lexicon_LMS.Controllers
         // POST: ActivityTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name")] ActivityType activityType)
@@ -90,6 +95,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: ActivityTypes/Delete/5
+        [Authorize(Roles = "teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +111,7 @@ namespace Lexicon_LMS.Controllers
         }
 
         // POST: ActivityTypes/Delete/5
+        [Authorize(Roles = "teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
