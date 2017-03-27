@@ -51,6 +51,12 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] ActivityType activityType)
         {
+            // Check if ActivityType with this Name already exist         
+            if (db.ActivityTypes.Any(m => m.Name == activityType.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en aktivitetstyp med detta namn");
+            }
+
             if (ModelState.IsValid)
             {
                 db.ActivityTypes.Add(activityType);
