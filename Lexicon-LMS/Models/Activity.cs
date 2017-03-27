@@ -10,12 +10,12 @@ namespace Lexicon_LMS.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Aktivitetsnamn")]
+        [Display(Name = "Aktivitetens namn")]
         [Required(ErrorMessage = "Du måste ange aktivitetens namn")]
         [StringLength(50, ErrorMessage = "Namnet kan inte vara längre än 50 tecken")]
         public string Name { get; set; }
 
-        [Display(Name = "Aktivitetsbeskrivning")]
+        [Display(Name = "Aktivitetens beskrivning")]
         [StringLength(500, ErrorMessage = "Beskrivningen kan inte vara längre än 500 tecken")]
         public string Description { get; set; }
 
