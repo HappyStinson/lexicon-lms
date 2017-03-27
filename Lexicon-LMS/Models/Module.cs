@@ -11,12 +11,12 @@ namespace Lexicon_LMS.Models
         public int Id { get; set; }
 
         [Display(Name = "Modulnamn")]
-        [Required(ErrorMessage = "Du måste ange kursens namn")]
+        [Required(ErrorMessage = "Du måste ange modulens namn")]
         [StringLength(50, ErrorMessage = "Namnet kan inte vara längre än 50 tecken")]
         public string Name { get; set; }
 
         [Display(Name = "Modulbeskrivning")]
-        [StringLength(500, ErrorMessage = "Beskrivningen kan inte vara mer än 500 tecken")]
+        [StringLength(500, ErrorMessage = "Beskrivningen kan inte vara längre än 500 tecken")]
         public string Description { get; set; }
 
         [Display(Name = "Startdatum")]
