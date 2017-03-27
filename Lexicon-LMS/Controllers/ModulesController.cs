@@ -37,18 +37,24 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = "teacher")]   
         public ActionResult Create(int? courseId)
         {
-            if (courseId != null)
-            {
-                var courseName = db.Courses.FirstOrDefault(c => c.Id == courseId).Name;
-                if (!string.IsNullOrEmpty(courseName))
-                    ViewBag.CourseName = courseName;
+            if (courseId == null)
+                return RedirectToAction("Index", "Courses", null);
 
-                var model = new Module { CourseId = (int)courseId };
-                return View(model);
-            }
             else
             {
-                return RedirectToAction("Index", "Courses", null);
+                var courseName = db.Courses.FirstOrDefault(c => c.Id == courseId)?.Name;
+                if (string.IsNullOrEmpty(courseName))
+                    return RedirectToAction("Index", "Courses", null);
+
+                ViewBag.CourseName = courseName;
+                var model = new Module
+                {
+                    StartDate = System.DateTime.Today,
+                    EndDate = System.DateTime.Today,
+                    CourseId = (int)courseId
+                };
+
+                return View(model);
             }
         }
 
