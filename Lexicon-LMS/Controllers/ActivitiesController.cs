@@ -126,6 +126,12 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,ActivityTypeId,ModuleId")] Activity activity)
         {
+            // Check if Activity with this Name already exist            
+            if (db.Activities.Any(m => m.Name == activity.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
