@@ -69,22 +69,22 @@ namespace Lexicon_LMS.Controllers
 
             if (module.StartDate.CompareTo(activity.StartDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum får inte inträffa innan modulen startar");
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
             }
 
             if (module.StartDate.CompareTo(activity.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum får inte inträffa innan modulen startar");
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
             }
 
             if (activity.EndDate.CompareTo(module.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum får inte inträffa efter att modulen har slutat");
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
             }
 
             if (activity.StartDate.CompareTo(module.EndDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum får inte inträffa efter att modulen har slutat");
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
             }
 
 
@@ -130,6 +130,33 @@ namespace Lexicon_LMS.Controllers
             if (db.Activities.Any(m => m.Name == activity.Name))
             {
                 ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
+            }
+
+            if (activity.StartDate.CompareTo(activity.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
+            }
+
+            Module module = db.Modules.Find(activity.ModuleId);
+
+            if (module.StartDate.CompareTo(activity.StartDate) == 1)
+            {
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
+            }
+
+            if (module.StartDate.CompareTo(activity.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
+            }
+
+            if (activity.EndDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
+            }
+
+            if (activity.StartDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
             }
 
             if (ModelState.IsValid)

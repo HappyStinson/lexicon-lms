@@ -64,7 +64,7 @@ namespace Lexicon_LMS.Controllers
 
             if (course.StartDate.CompareTo(course.EndDate) == 1)
             {              
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
             if (ModelState.IsValid)
@@ -109,7 +109,7 @@ namespace Lexicon_LMS.Controllers
 
             if (course.StartDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
             if (ModelState.IsValid)
