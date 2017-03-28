@@ -1,21 +1,29 @@
-﻿@model Lexicon_LMS.Models.Module
+﻿@model Lexicon_LMS.Models.Activity
 
 @{
-    ViewBag.Title = "Modul - Detaljer";
+    ViewBag.Title = "Details";
 }
 
-<h2>Modul - <u>Detaljer</u></h2>
+<h2>Details</h2>
 
 <div>
-    <h4></h4>
+    <h4>Activity</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Course.Name)
+            @Html.DisplayNameFor(model => model.Module.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Course.Name)
+            @Html.DisplayFor(model => model.Module.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type.Name)
         </dd>
 
         <dt>
@@ -49,9 +57,10 @@
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Tillbaka till kursens detaljvy", "Details", "Courses", new { id = Model.CourseId }, null)
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

@@ -1,21 +1,20 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@model Lexicon_LMS.Models.Activity
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
 }
 
-<h2>Kurs - <strong><u>ändra</u></strong></h2>
+<h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4>Activity</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -49,47 +48,31 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ActivityTypeId, "ActivityTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ActivityTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ActivityTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModuleId, "ModuleId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ModuleId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ModuleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-@if (Model.Modules != null && Model.Modules.Count > 0)
-{
-  <h4>
-    Kursmoduler
-  </h4>
-
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
-    @foreach (var item in Model.Modules)
-    {
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
-                @item.Name
-              </a>
-              @Html.ActionLink("Ändra modul", "Edit", "Modules", new { id = item.Id }, new { @class = "btn btn-default btn-xs" })
-              @Html.ActionLink("Ta bort modul", "Delete", "Modules", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
-            </h4>
-          </div>
-          <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
-            <div class="panel-body">
-              @item.Description
-            </div>
-          </div>
-        </div>
-    }
-
-  </div>
-}
-
 <div>
-    @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

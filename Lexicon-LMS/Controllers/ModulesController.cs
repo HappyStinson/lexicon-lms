@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
+using System;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -42,17 +43,19 @@ namespace Lexicon_LMS.Controllers
 
             else
             {
-                var courseName = db.Courses.FirstOrDefault(c => c.Id == courseId)?.Name;
-                if (string.IsNullOrEmpty(courseName))
+                var course = db.Courses.FirstOrDefault(c => c.Id == courseId);
+                if (course == null)
                     return RedirectToAction("Index", "Courses", null);
 
-                ViewBag.CourseName = courseName;
-                var model = new Module
+                var model = new CreateModuleViewModel
                 {
-                    StartDate = System.DateTime.Today,
-                    EndDate = System.DateTime.Today,
-                    CourseId = (int)courseId
-                };
+                    CourseName = course.Name,
+                    CourseStart = course.StartDate.ToShortDateString(),
+                    CourseEnd = course.EndDate.ToShortDateString(),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today,
+                    CourseId = (int)courseId                    
+                };                
 
                 return View(model);
             }
@@ -64,50 +67,49 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
+        public ActionResult Create(CreateModuleViewModel viewModel)
         {
             // Check if module with this Name already exist            
-            if (db.Modules.Any(m => m.Name == module.Name))
+            if (db.Modules.Any(m => m.Name == viewModel.Name))
             {
                 ModelState.AddModelError("Name", "Det finns redan en modul med detta modulnamn");
             }
 
-            if (module.StartDate.CompareTo(module.EndDate) == 1)
+            if (viewModel.StartDate.CompareTo(viewModel.EndDate) == 1)
             {
                 ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
-            Course course = db.Courses.Find(module.CourseId);         
+            Course course = db.Courses.Find(viewModel.CourseId);
 
-            if (course.StartDate.CompareTo(module.StartDate) == 1)
+            if (course.StartDate.CompareTo(viewModel.StartDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum får inte inträffa innan kursen startar");
+                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa innan kursen startar");
             }
 
-            if (course.StartDate.CompareTo(module.EndDate) == 1)
+            if (course.StartDate.CompareTo(viewModel.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum får inte inträffa innan kursen startar");
+                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursen startar");
             }
 
-            if (module.EndDate.CompareTo(course.EndDate) == 1)
+            if (viewModel.EndDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum får inte inträffa efter att kursen har slutat");
+                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter att kursen har slutat");
             }
 
-            if (module.StartDate.CompareTo(course.EndDate) == 1)
+            if (viewModel.StartDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum får inte inträffa efter att kursen har slutat");
+                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter att kursen har slutat");
             }
-
 
             if (ModelState.IsValid)
             {
-                db.Modules.Add(module);
+                db.Modules.Add(viewModel);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Courses", new { id = module.CourseId });
+                return RedirectToAction("Details", "Courses", new { id = viewModel.CourseId });
             }
 
-            return View(module);
+            return View(viewModel);
         }
 
         // GET: Modules/Edit/5
@@ -135,31 +137,37 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
+            // Check if module with this Name already exist            
+            if (db.Modules.Any(m => m.Name == module.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en modul med detta Modulnamn");
+            }
+
             if (module.StartDate.CompareTo(module.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan Startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan Startdatum");
             }
 
             Course course = db.Courses.Find(module.CourseId);
 
             if (course.StartDate.CompareTo(module.StartDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum får inte inträffa innan kursens Startdatum");
+                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa innan kursens Startdatum");
             }
 
             if (course.StartDate.CompareTo(module.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum får inte inträffa innan kursens Startdatum");
+                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursens Startdatum");
             }
 
             if (module.EndDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum får inte inträffa efter kursens Slutdatum");
+                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter kursens Slutdatum");
             }
 
             if (module.StartDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum får inte inträffa efter kursens Slutdatum");
+                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter kursens Slutdatum");
             }      
 
             if (ModelState.IsValid)
