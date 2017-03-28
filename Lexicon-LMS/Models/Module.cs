@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lexicon_LMS.Models
@@ -33,6 +34,5 @@ namespace Lexicon_LMS.Models
         // Navigation property    
         public virtual ICollection<Activity> Actvities { get; set; }
         public virtual Course Course { get; set; }
-
     }
 }
