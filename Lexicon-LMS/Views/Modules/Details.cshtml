@@ -49,10 +49,9 @@
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-
     </dl>
 </div>
 <p>
     @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Tillbaka till Modulöversikten", "Index")
+    @Html.ActionLink("Tillbaka till kursens detaljvy", "Details", "Courses", new { id = Model.CourseId }, null)
 </p>
