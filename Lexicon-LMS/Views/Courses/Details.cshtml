@@ -51,7 +51,7 @@
 
                         Modulbeskrivning: @Html.DisplayFor(modelItem => item.Description)<br />
                         Modulstart: @Html.DisplayFor(modelItem => item.StartDate)  Modulavslut: @Html.DisplayFor(modelItem => item.EndDate)<br />
-
+                        @Html.ActionLink("Se detaljer", "Details", "Modules", new { id = item.Id }, null)
                     </div>
 
                 </div>
