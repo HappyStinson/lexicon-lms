@@ -12,12 +12,8 @@ namespace Lexicon_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index(Course course)
+        public ActionResult Index()
         {
-            if (!string.IsNullOrEmpty(course.Name))
-                return View(course);
-
-            ModelState.Clear();
             return View();
         }
 
@@ -56,7 +52,6 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
         {        
-
             // Check if course with this Name already exist            
             if (db.Courses.Any(c => c.Name == course.Name))
             {
@@ -75,7 +70,8 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index", course);
+            ViewBag.ShowContent = "in";
+            return View("Index", course);
         }
 
         // GET: Courses/Edit/5
