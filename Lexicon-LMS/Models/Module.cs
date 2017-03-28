@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Lexicon_LMS.Models
 {
@@ -31,12 +29,10 @@ namespace Lexicon_LMS.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]        
         public DateTime EndDate { get; set; }      
       
-    
         public int CourseId { get; set; }
 
         // Navigation property    
         public virtual ICollection<Activity> Actvities { get; set; }
         public virtual Course Course { get; set; }
-
     }
 }
