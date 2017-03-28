@@ -65,6 +65,29 @@ namespace Lexicon_LMS.Controllers
                 ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
+            Module module = db.Modules.Find(activity.ModuleId);
+
+            if (module.StartDate.CompareTo(activity.StartDate) == 1)
+            {
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum får inte inträffa innan modulen startar");
+            }
+
+            if (module.StartDate.CompareTo(activity.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum får inte inträffa innan modulen startar");
+            }
+
+            if (activity.EndDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum får inte inträffa efter att modulen har slutat");
+            }
+
+            if (activity.StartDate.CompareTo(module.EndDate) == 1)
+            {
+                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum får inte inträffa efter att modulen har slutat");
+            }
+
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
