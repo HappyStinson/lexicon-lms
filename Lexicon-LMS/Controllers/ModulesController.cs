@@ -135,6 +135,12 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
+            // Check if module with this Name already exist            
+            if (db.Modules.Any(m => m.Name == module.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en modul med detta Modulnamn");
+            }
+
             if (module.StartDate.CompareTo(module.EndDate) == 1)
             {
                 ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan Startdatum");
