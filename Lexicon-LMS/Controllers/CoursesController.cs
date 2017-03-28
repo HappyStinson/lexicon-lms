@@ -38,6 +38,9 @@ namespace Lexicon_LMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+
             return View(course);
         }
 
