@@ -1,4 +1,4 @@
-﻿@model Lexicon_LMS.Models.Module
+﻿@model Lexicon_LMS.Models.CreateModuleViewModel
 
 @{
     ViewBag.Title = "Skapa";
@@ -6,7 +6,8 @@
 
 <h2>Modul - <u>Skapa</u></h2>
 
-<h4>@Html.DisplayNameFor(model => model.Course.Name): @ViewBag.CourseName</h4>
+<h4>Kurs: @Html.DisplayFor(model => model.CourseName)</h4>
+<h4>Pågår mellan @Html.DisplayFor(model => model.CourseStart) - @Html.DisplayFor(model => model.CourseEnd)</h4>
 
 @using (Html.BeginForm())
 {
@@ -48,6 +49,9 @@
         </div>
       </div>
 
+      @Html.HiddenFor(model => model.CourseName)
+      @Html.HiddenFor(model => model.CourseStart)
+      @Html.HiddenFor(model => model.CourseEnd)
       @Html.HiddenFor(model => model.CourseId)
 
       <div class="form-group">
