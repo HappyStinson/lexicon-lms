@@ -168,6 +168,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
+    <Compile Include="Controllers\ActivityTypesController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModulesController.cs" />
@@ -186,8 +188,14 @@
     <Compile Include="Migrations\201703231256307_init3.Designer.cs">
       <DependentUpon>201703231256307_init3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703271303545_activity1.cs" />
+    <Compile Include="Migrations\201703271303545_activity1.Designer.cs">
+      <DependentUpon>201703271303545_activity1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CreateModuleViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -261,6 +269,16 @@
     <Content Include="Views\Modules\Edit.cshtml" />
     <Content Include="Views\Modules\Index.cshtml" />
     <Content Include="Views\Courses\_ListAllPartialView.cshtml" />
+    <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Activities\Delete.cshtml" />
+    <Content Include="Views\Activities\Details.cshtml" />
+    <Content Include="Views\Activities\Edit.cshtml" />
+    <Content Include="Views\Activities\Index.cshtml" />
+    <Content Include="Views\ActivityTypes\Create.cshtml" />
+    <Content Include="Views\ActivityTypes\Delete.cshtml" />
+    <Content Include="Views\ActivityTypes\Details.cshtml" />
+    <Content Include="Views\ActivityTypes\Edit.cshtml" />
+    <Content Include="Views\ActivityTypes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703231256307_init3.resx">
       <DependentUpon>201703231256307_init3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703271303545_activity1.resx">
+      <DependentUpon>201703271303545_activity1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
