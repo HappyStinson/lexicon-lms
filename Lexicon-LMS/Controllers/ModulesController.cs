@@ -92,19 +92,20 @@ namespace Lexicon_LMS.Controllers
                     ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa innan kursen startar");
                 }
 
-            if (course.StartDate.CompareTo(viewModel.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursen startar");
-            }
+                if (course.StartDate.CompareTo(viewModel.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursen startar");
+                }
 
-            if (viewModel.EndDate.CompareTo(course.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter att kursen har slutat");
-            }
+                if (viewModel.EndDate.CompareTo(course.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter att kursen har slutat");
+                }
 
-            if (viewModel.StartDate.CompareTo(course.EndDate) == 1)
-            {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter att kursen har slutat");
+                if (viewModel.StartDate.CompareTo(course.EndDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter att kursen har slutat");
+                }
             }
 
             if (ModelState.IsValid)
@@ -166,20 +167,21 @@ namespace Lexicon_LMS.Controllers
                     ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa innan kursens Startdatum");
                 }
 
-            if (course.StartDate.CompareTo(module.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursens Startdatum");
-            }
+                if (course.StartDate.CompareTo(module.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa innan kursens Startdatum");
+                }
 
-            if (module.EndDate.CompareTo(course.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter kursens Slutdatum");
-            }
+                if (module.EndDate.CompareTo(course.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Modulens Slutdatum kan inte inträffa efter kursens Slutdatum");
+                }
 
-            if (module.StartDate.CompareTo(course.EndDate) == 1)
-            {
-                ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter kursens Slutdatum");
-            }      
+                if (module.StartDate.CompareTo(course.EndDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Modulens Startdatum kan inte inträffa efter kursens Slutdatum");
+                }
+            }
 
             if (ModelState.IsValid)
             {
