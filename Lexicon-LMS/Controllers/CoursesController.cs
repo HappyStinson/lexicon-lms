@@ -111,22 +111,12 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
         {
-            // Check if course with this Name already exist             
-            bool courseSameName = false;
-            var courses = db.Courses.Where(c => c.Id != course.Id).ToList();
+            // Check if course with this Name and different Id, already exist    
+            if (db.Courses.Any(c => ((c.Id != course.Id) && (c.Name == course.Name))))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");               
+            }
 
-            foreach (var item in courses)
-            {
-                if (item.Name.Equals(course.Name))
-                {
-                    courseSameName = true;
-                }
-            }         
-            if (courseSameName == true)
-            {
-                ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");             
-            }                     
-                    
             if (course.StartDate.CompareTo(course.EndDate) == 1)
             {
                 ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
