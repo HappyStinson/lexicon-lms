@@ -35,6 +35,9 @@ namespace Lexicon_LMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+
             return View(course);
         }
 
@@ -52,7 +55,7 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
-        {        
+        {       
             // Check if course with this Name already exist            
             if (db.Courses.Any(c => c.Name == course.Name))
             {
@@ -63,7 +66,7 @@ namespace Lexicon_LMS.Controllers
             var end = course.EndDate;
 
             if (start.CompareTo(end) == 1)
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             else
             {
                 if (start.Year.CompareTo(DateTime.Today.Year - 1) == -1)
@@ -108,9 +111,15 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate")] Course course)
         {
+            // Check if course with this Name already exist            
+            if (db.Courses.Any(c => c.Name == course.Name))
+            {
+                ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");
+            }
+
             if (course.StartDate.CompareTo(course.EndDate) == 1)
             {
-                ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan Startdatum");
+                ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
             if (ModelState.IsValid)
