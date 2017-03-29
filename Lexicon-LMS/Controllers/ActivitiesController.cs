@@ -54,11 +54,11 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,ActivityTypeId,ModuleId")] Activity activity)
         {
-            // Check if Activity with this Name already exist            
-            if (db.Activities.Any(m => m.Name == activity.Name))
+            // Check if Activity with this Name already exist in same Module   
+            if (db.Activities.Any(a => ((a.ModuleId == activity.ModuleId) && (a.Name == activity.Name))))
             {
-                ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
-            }
+                ModelState.AddModelError("Name", "Modulen innehåller redan en aktivitet med detta namn");
+            }           
 
             if (activity.StartDate.CompareTo(activity.EndDate) == 1)
             {
@@ -125,21 +125,11 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,ActivityTypeId,ModuleId")] Activity activity)
-        {
-            // Check if Activity with this Name already exist                          
-            bool activitySameName = false;
-            var activities = db.Activities.Where(a => a.Id != activity.Id).ToList();         
-
-            foreach (var item in activities)
+        {         
+            // Check if Activity with this Name and different Id, already exist in same Module   
+            if (db.Activities.Any(a => ((a.Id != activity.Id) && (a.ModuleId == activity.ModuleId) && (a.Name == activity.Name))))
             {
-                if (item.Name.Equals(activity.Name))
-                {
-                    activitySameName = true;
-                }
-            }
-            if (activitySameName == true)
-            {
-                ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
+                ModelState.AddModelError("Name", "Modulen innehåller redan en aktivitet med detta namn");
             }
 
             if (activity.StartDate.CompareTo(activity.EndDate) == 1)
