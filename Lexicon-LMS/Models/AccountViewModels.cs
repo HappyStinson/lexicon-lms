@@ -80,6 +80,19 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Bekräfta lösenordet")]
         [Compare("Lösenord", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "Ange Förnamn")]
+        [Display(Name = "Förnamn")]
+        [StringLength(32)]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Ange Efternamn")]
+        [Display(Name = "Efternamn")]
+        [StringLength(32)]
+        public string LastName { get; set; }
+
+        [Display(Name = "Fullständigt namn")]
+        public string FullName { get { return FirstName + " " + LastName; } }
     }
 
     public class ResetPasswordViewModel
