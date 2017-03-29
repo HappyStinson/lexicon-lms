@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
+using System;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -58,9 +59,18 @@ namespace Lexicon_LMS.Controllers
                 ModelState.AddModelError("Name", "Det finns redan en kurs med detta Kursnamn");
             }
 
-            if (course.StartDate.CompareTo(course.EndDate) == 1)
-            {              
+            var start = course.StartDate;
+            var end = course.EndDate;
+
+            if (start.CompareTo(end) == 1)
                 ModelState.AddModelError("EndDate", "Slutdatum får inte inträffa innan startdatum");
+            else
+            {
+                if (start.Year.CompareTo(DateTime.Today.Year - 1) == -1)
+                    ModelState.AddModelError("StartDate", "Startdatum får inte vara äldre än 365 dagar");
+
+                if (end.Year.CompareTo(DateTime.Today.Year + 1) == 1)
+                    ModelState.AddModelError("EndDate", "Slutdatum får inte vara senare än 365 dagar");
             }
 
             if (ModelState.IsValid)
