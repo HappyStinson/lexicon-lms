@@ -144,8 +144,18 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
-            // Check if module with this Name already exist            
-            if (db.Modules.Any(m => m.Name == module.Name))
+            // Check if module with this Name already exist             
+            bool moduleSameName = false;
+            var modules = db.Modules.Where(c => c.Id != module.Id).ToList();
+
+            foreach (var item in modules)
+            {
+                if (item.Name.Equals(module.Name))
+                {
+                    moduleSameName = true;
+                }
+            }
+            if (moduleSameName == true)
             {
                 ModelState.AddModelError("Name", "Det finns redan en modul med detta Modulnamn");
             }
