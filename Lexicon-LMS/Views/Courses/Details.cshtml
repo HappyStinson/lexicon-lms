@@ -48,17 +48,15 @@
             <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
 
                 <div class="panel-body">
-
                     Modulbeskrivning: @Html.DisplayFor(modelItem => item.Description)<br />
                     Pågår mellan @Html.DisplayFor(modelItem => item.StartDate) - @Html.DisplayFor(modelItem => item.EndDate)<br />
-
                     Aktiviteter
                     @foreach (var activity in item.Actvities)
                     {
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="~/Activities/Details/#@activity.Id" aria-expanded="false" aria-controls="@item.Id">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="~/Activities/Details/#@activity.Id" aria-expanded="false" aria-controls="@activity.Id">
                                         @activity.Name
                                     </a>
                                 </h4>
