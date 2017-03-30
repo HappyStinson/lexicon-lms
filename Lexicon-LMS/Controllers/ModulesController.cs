@@ -69,10 +69,10 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateModuleViewModel viewModel)
         {
-            // Check if module with this Name already exist            
-            if (db.Modules.Any(m => m.Name == viewModel.Name))
+            // Check if module with this Name already exist in same Course   
+            if (db.Modules.Any(m => ((m.CourseId == viewModel.CourseId) && (m.Name == viewModel.Name))))
             {
-                ModelState.AddModelError("Name", "Det finns redan en modul med detta modulnamn");
+                ModelState.AddModelError("Name", "Kursen innehåller redan en modul med detta Modulnamn");
             }
 
             if (viewModel.StartDate.CompareTo(viewModel.EndDate) == 1)
@@ -144,12 +144,12 @@ namespace Lexicon_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
-            // Check if module with this Name already exist            
-            if (db.Modules.Any(m => m.Name == module.Name))
+            // Check if module with this Name and different Id, already exist in same Course   
+            if (db.Modules.Any(m => ((m.Id != module.Id) && (m.CourseId == module.CourseId) && (m.Name == module.Name))))
             {
-                ModelState.AddModelError("Name", "Det finns redan en modul med detta Modulnamn");
+                ModelState.AddModelError("Name", "Kursen innehåller redan en modul med detta Modulnamn");
             }
-
+            
             if (module.StartDate.CompareTo(module.EndDate) == 1)
             {
                 ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan Startdatum");

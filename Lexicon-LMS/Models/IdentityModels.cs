@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lexicon_LMS.Models
 {
@@ -16,6 +17,23 @@ namespace Lexicon_LMS.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        [Display(Name = "Ange en kurs")]
+        [Required(ErrorMessage = "Du måste ange en kurs")]   
+        public int CourseId { get; set; }
+
+        [Required(ErrorMessage = "Ange Förnamn")]
+        [Display(Name = "Förnamn")]
+        [StringLength(32)]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Ange Efternamn")]
+        [Display(Name = "Efternamn")]
+        [StringLength(32)]
+        public string LastName { get; set; }
+
+        [Display(Name = "Fullständigt namn")]
+        public string FullName { get { return FirstName + " " + LastName; } }
 
         // Navigation property
         public virtual Course Course { get; set; }

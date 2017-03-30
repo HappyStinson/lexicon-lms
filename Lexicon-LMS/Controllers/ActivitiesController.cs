@@ -78,11 +78,11 @@ namespace Lexicon_LMS.Controllers
             if (viewModel.ActivityTypeId == 0)
                 ModelState.AddModelError("ActivityTypeId", "Du måste skapa en aktivitetstyp innan du skapar en aktivitet");
 
-            // Check if Activity with this Name already exist    
-            if (db.Activities.Any(m => m.Name == viewModel.Name))
+            // Check if Activity with this Name already exist in same Module   
+            if (db.Activities.Any(a => ((a.ModuleId == viewModel.ModuleId) && (a.Name == viewModel.Name))))
             {
-                ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
-            }
+                ModelState.AddModelError("Name", "Modulen innehåller redan en aktivitet med detta namn");
+            }           
 
             if (viewModel.StartDate.CompareTo(viewModel.EndDate) == 1)
             {
@@ -90,31 +90,41 @@ namespace Lexicon_LMS.Controllers
             }
 
             Module module = db.Modules.Find(viewModel.ModuleId);
-            var info = $"Modulen \"{module.Name}\" pågår mellan {module.StartDate.ToShortDateString()} - {module.EndDate.ToShortDateString()}";
-            var showInfo = false;
-
-            if (module.StartDate.CompareTo(viewModel.StartDate) == 1)
+            if (module == null)
             {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
-                showInfo = true;
+                ModelState.AddModelError(key: "ModuleId", errorMessage: "Du måste skapa en modul innan du skapar en aktivitet");
             }
-
-            if (module.StartDate.CompareTo(viewModel.EndDate) == 1)
+            else
             {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
-                showInfo = true;
-            }
+                var info = $"Modulen \"{module.Name}\" pågår mellan {module.StartDate.ToShortDateString()} - {module.EndDate.ToShortDateString()}";
+                var showInfo = false;
 
-            if (viewModel.EndDate.CompareTo(module.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
-                showInfo = true;
-            }
+                if (module.StartDate.CompareTo(viewModel.StartDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
+                    showInfo = true;
+                }
 
-            if (viewModel.StartDate.CompareTo(module.EndDate) == 1)
-            {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
-                showInfo = true;
+                if (module.StartDate.CompareTo(viewModel.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
+                    showInfo = true;
+                }
+
+                if (viewModel.EndDate.CompareTo(module.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
+                    showInfo = true;
+                }
+
+                if (viewModel.StartDate.CompareTo(module.EndDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
+                    showInfo = true;
+                }
+
+                if (showInfo)
+                    ModelState.AddModelError("", info);
             }
 
             if (ModelState.IsValid)
@@ -124,9 +134,6 @@ namespace Lexicon_LMS.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "Courses", new { id = viewModel.CourseId });
             }
-
-            if (showInfo)
-                ModelState.AddModelError("", info);
 
             var course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseId);
             var modules = course.Modules.OrderBy(m => m.Name).ToList();
@@ -161,11 +168,11 @@ namespace Lexicon_LMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate,EndDate,ActivityTypeId,ModuleId")] Activity activity)
-        {
-            // Check if Activity with this Name already exist            
-            if (db.Activities.Any(m => m.Name == activity.Name))
+        {         
+            // Check if Activity with this Name and different Id, already exist in same Module   
+            if (db.Activities.Any(a => ((a.Id != activity.Id) && (a.ModuleId == activity.ModuleId) && (a.Name == activity.Name))))
             {
-                ModelState.AddModelError("Name", "Det finns redan en aktivitet med detta namn");
+                ModelState.AddModelError("Name", "Modulen innehåller redan en aktivitet med detta namn");
             }
 
             if (activity.StartDate.CompareTo(activity.EndDate) == 1)
