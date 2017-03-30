@@ -176,21 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703231428167_seed6.cs" />
-    <Compile Include="Migrations\201703231428167_seed6.Designer.cs">
-      <DependentUpon>201703231428167_seed6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703231437038_seed8.cs" />
-    <Compile Include="Migrations\201703231437038_seed8.Designer.cs">
-      <DependentUpon>201703231437038_seed8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703231256307_init3.cs" />
-    <Compile Include="Migrations\201703231256307_init3.Designer.cs">
-      <DependentUpon>201703231256307_init3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703271303545_activity1.cs" />
-    <Compile Include="Migrations\201703271303545_activity1.Designer.cs">
-      <DependentUpon>201703271303545_activity1.cs</DependentUpon>
+    <Compile Include="Migrations\201703300909550_init.cs" />
+    <Compile Include="Migrations\201703300909550_init.Designer.cs">
+      <DependentUpon>201703300909550_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -298,17 +286,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703231428167_seed6.resx">
-      <DependentUpon>201703231428167_seed6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703231437038_seed8.resx">
-      <DependentUpon>201703231437038_seed8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703231256307_init3.resx">
-      <DependentUpon>201703231256307_init3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703271303545_activity1.resx">
-      <DependentUpon>201703271303545_activity1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703300909550_init.resx">
+      <DependentUpon>201703300909550_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

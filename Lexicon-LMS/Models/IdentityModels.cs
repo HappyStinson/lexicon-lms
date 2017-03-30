@@ -18,6 +18,10 @@ namespace Lexicon_LMS.Models
             return userIdentity;
         }
 
+        [Display(Name = "Ange en kurs")]
+        [Required(ErrorMessage = "Du måste ange en kurs")]   
+        public int CourseId { get; set; }
+
         [Required(ErrorMessage = "Ange Förnamn")]
         [Display(Name = "Förnamn")]
         [StringLength(32)]

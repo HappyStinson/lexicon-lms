@@ -81,6 +81,10 @@ namespace Lexicon_LMS.Models
         [Compare("Lösenord", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Ange en kurs")]
+        [Required(ErrorMessage = "Du måste ange en kurs")]
+        public int CourseId { get; set; }
+
         [Required(ErrorMessage = "Ange Förnamn")]
         [Display(Name = "Förnamn")]
         [StringLength(32)]
