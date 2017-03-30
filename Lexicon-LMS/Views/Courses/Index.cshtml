@@ -7,6 +7,7 @@
 <h2>Kurs - <strong><u>översikt</u></strong></h2>
 
 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#create">Skapa ny kurs</button>
+@Html.ActionLink("Hantera aktivitetstyper", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @class = "btn btn-info" })
 
 <br>
 <div id="create" class="collapse @ViewBag.ShowContent">

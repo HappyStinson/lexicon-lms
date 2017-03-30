@@ -39,11 +39,22 @@ namespace Lexicon_LMS.Controllers
 
         // GET: Activities/Create
         [Authorize(Roles = "teacher")]
-        public ActionResult Create()
+        public ActionResult Create(int? courseId)
         {
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name");
-            ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
-            return View();
+            if (courseId == null)
+                return RedirectToAction("Index", "Courses", null);
+
+            else
+            {
+                var course = db.Courses.FirstOrDefault(c => c.Id == courseId);
+                if (course == null)
+                    return RedirectToAction("Index", "Courses", null);
+
+                var modules = course.Modules.OrderBy(m => m.Name).ToList();
+                ViewBag.ModuleId = new SelectList(modules, "Id", "Name");
+                ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
+                return View();
+            }
         }
 
         // POST: Activities/Create
@@ -92,7 +103,7 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Courses", new { id = activity.Module.CourseId });
             }
 
             ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
@@ -163,7 +174,7 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Courses", new { id = activity.Module.CourseId });
             }
             ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
             ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
@@ -193,9 +204,10 @@ namespace Lexicon_LMS.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Activity activity = db.Activities.Find(id);
+            int courseId = activity.Module.CourseId;
             db.Activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Courses", new { id = courseId });
         }
 
         protected override void Dispose(bool disposing)
