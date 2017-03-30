@@ -1,7 +1,7 @@
 ﻿body{
   
     padding-top: 150px; /*50px*/
-    padding-bottom: 0;  /*20px*/
+    padding-bottom: 5%;  /*20px*/
 
     margin-bottom:0;
 }
@@ -40,14 +40,11 @@ div.botbar {
 }
 
 footer{
-    position: fixed;   
-    bottom: 0;
+    position: fixed;
+    bottom: -10px;
     left:0;
-    /*opacity: .3;*/
     color: black;
-
     z-index: 2147483638;
-
      width:100%;
 }
 
