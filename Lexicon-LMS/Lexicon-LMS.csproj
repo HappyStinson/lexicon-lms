@@ -273,6 +273,7 @@
     <Content Include="Views\ActivityTypes\Details.cshtml" />
     <Content Include="Views\ActivityTypes\Edit.cshtml" />
     <Content Include="Views\ActivityTypes\Index.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

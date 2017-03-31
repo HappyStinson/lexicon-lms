@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Lexicon_LMS.Models;
@@ -50,7 +51,18 @@ namespace Lexicon_LMS.Controllers
             {
                 _userManager = value;
             }
-        }
+        }     
+        
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: /Account/Users
+        public ActionResult Users()
+        {
+            var users = db.Users; 
+
+            return View(users.ToList());
+        }             
+
 
         //
         // GET: /Account/Login
@@ -426,6 +438,7 @@ namespace Lexicon_LMS.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+        private readonly object roleName;
 
         private IAuthenticationManager AuthenticationManager
         {
