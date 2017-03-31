@@ -50,10 +50,20 @@ namespace Lexicon_LMS.Controllers
                 if (course == null)
                     return RedirectToAction("Index", "Courses", null);
 
+                var model = new CreateActivityViewModel
+                {
+                    CourseName = course.Name,
+                    CourseStart = course.StartDate.ToShortDateString(),
+                    CourseEnd = course.EndDate.ToShortDateString(),
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Today
+                };
+
                 var modules = course.Modules.OrderBy(m => m.Name).ToList();
                 ViewBag.ModuleId = new SelectList(modules, "Id", "Name");
                 ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name");
-                return View();
+
+                return View(model);
             }
         }
 
@@ -63,52 +73,74 @@ namespace Lexicon_LMS.Controllers
         [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,ActivityTypeId,ModuleId")] Activity activity)
+        public ActionResult Create(CreateActivityViewModel viewModel)
         {
+            if (viewModel.ActivityTypeId == 0)
+                ModelState.AddModelError("ActivityTypeId", "Du måste skapa en aktivitetstyp innan du skapar en aktivitet");
+
             // Check if Activity with this Name already exist in same Module   
-            if (db.Activities.Any(a => ((a.ModuleId == activity.ModuleId) && (a.Name == activity.Name))))
+            if (db.Activities.Any(a => ((a.ModuleId == viewModel.ModuleId) && (a.Name == viewModel.Name))))
             {
                 ModelState.AddModelError("Name", "Modulen innehåller redan en aktivitet med detta namn");
             }           
 
-            if (activity.StartDate.CompareTo(activity.EndDate) == 1)
+            if (viewModel.StartDate.CompareTo(viewModel.EndDate) == 1)
             {
                 ModelState.AddModelError("EndDate", "Slutdatum kan inte inträffa innan startdatum");
             }
 
-            Module module = db.Modules.Find(activity.ModuleId);
-
-            if (module.StartDate.CompareTo(activity.StartDate) == 1)
+            Module module = db.Modules.Find(viewModel.ModuleId);
+            if (module == null)
             {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
+                ModelState.AddModelError(key: "ModuleId", errorMessage: "Du måste skapa en modul innan du skapar en aktivitet");
             }
-
-            if (module.StartDate.CompareTo(activity.EndDate) == 1)
+            else
             {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
-            }
+                var info = $"Modulen \"{module.Name}\" pågår mellan {module.StartDate.ToShortDateString()} - {module.EndDate.ToShortDateString()}";
+                var showInfo = false;
 
-            if (activity.EndDate.CompareTo(module.EndDate) == 1)
-            {
-                ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
-            }
+                if (module.StartDate.CompareTo(viewModel.StartDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
+                    showInfo = true;
+                }
 
-            if (activity.StartDate.CompareTo(module.EndDate) == 1)
-            {
-                ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
-            }
+                if (module.StartDate.CompareTo(viewModel.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
+                    showInfo = true;
+                }
 
+                if (viewModel.EndDate.CompareTo(module.EndDate) == 1)
+                {
+                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
+                    showInfo = true;
+                }
+
+                if (viewModel.StartDate.CompareTo(module.EndDate) == 1)
+                {
+                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
+                    showInfo = true;
+                }
+
+                if (showInfo)
+                    ModelState.AddModelError("", info);
+            }
 
             if (ModelState.IsValid)
             {
+                Activity activity = viewModel;
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Courses", new { id = activity.Module.CourseId });
+                return RedirectToAction("Details", "Courses", new { id = viewModel.CourseId });
             }
 
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
-            ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.ActivityTypeId);
-            return View(activity);
+            var course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseId);
+            var modules = course.Modules.OrderBy(m => m.Name).ToList();
+            ViewBag.ModuleId = new SelectList(modules, "Id", "Name");
+            ViewBag.ActivityTypeId = new SelectList(db.ActivityTypes, "Id", "Name", viewModel.ActivityTypeId);
+
+            return View(viewModel);
         }
 
         // GET: Activities/Edit/5
