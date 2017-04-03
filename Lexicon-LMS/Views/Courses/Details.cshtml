@@ -71,9 +71,11 @@
             </div>
         </div>
     }
-
+  @if (User.IsInRole("teacher"))
+  {
     <p>
         @Html.ActionLink("Ändra", "Edit", new { id = Model.Id }) |
         @Html.ActionLink("Tillbaka till kursöversikten", "Index")
     </p>
+  }
 </div>
