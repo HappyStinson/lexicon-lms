@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Lexicon LMS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/StyleSheet.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
            
              
             <div class="navbar-header">
-                <a href="@Url.Action("Index", "Courses")" class="navbar-brand">
+                <a href="@Url.Action("Start", "Account")" class="navbar-brand">
                     <img src="~/Content/Images/download.png" title="title" alt="additional title" height="80"/>
                 </a>
 
@@ -35,6 +35,15 @@
             </div>
         </div>
     </div>
+    <div class="navbar>
+      <div class="container">
+        <a href="@Url.Action("Start", "Account")" class="navbar-btn">Start</a>
+        @if (User.IsInRole("teacher"))
+        {
+          <a href="@Url.Action("Register", "Account")" class="navbar-btn">Registrera användare</a>
+        }
+        </div>
+      </div>
     <div class="container body-content">
         <nav role="navigation" id="nav">
            

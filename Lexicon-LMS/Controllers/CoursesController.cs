@@ -14,11 +14,13 @@ namespace Lexicon_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
+        [Authorize(Roles = "teacher")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "teacher")]
         public ActionResult ListCourses()
         {
             return PartialView("_ListAllPartialView", db.Courses.ToList());

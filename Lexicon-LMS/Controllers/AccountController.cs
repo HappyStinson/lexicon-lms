@@ -1,12 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Lexicon_LMS.Models;
@@ -54,6 +50,20 @@ namespace Lexicon_LMS.Controllers
         }     
         
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Start()
+        {
+            if (User.IsInRole("teacher"))
+                return RedirectToAction("Index", "Courses");
+            else if (User.IsInRole("student"))
+            {
+                var userId = User.Identity.GetUserId();
+                var courseId = db.Users.First(u => u.Id == userId).CourseId;
+                return RedirectToAction("Details", "Courses", new { id = courseId });
+            }
+            else
+                return RedirectToAction("Login");
+        }
 
         // GET: /Account/Users
         public ActionResult Users()
@@ -151,6 +161,7 @@ namespace Lexicon_LMS.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             return View();
         }
 
@@ -163,24 +174,30 @@ namespace Lexicon_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    CourseId = model.CourseId
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var role = "student";
+                    if (model.IsTeacher)
+                        role = "teacher";
 
-                    return RedirectToAction("Index", "Courses");
+                    UserManager.AddToRole(user.Id, role);
+                    return RedirectToAction("Register");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             return View(model);
         }
 
