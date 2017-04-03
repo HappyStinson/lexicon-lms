@@ -185,6 +185,7 @@
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CreateActivityViewModel.cs" />
     <Compile Include="Models\CreateModuleViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -273,6 +274,7 @@
     <Content Include="Views\ActivityTypes\Details.cshtml" />
     <Content Include="Views\ActivityTypes\Edit.cshtml" />
     <Content Include="Views\ActivityTypes\Index.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
