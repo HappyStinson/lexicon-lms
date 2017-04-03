@@ -61,6 +61,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Registrera" />
+            @Html.ActionLink("Se alla användare", "Users", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-info" })
         </div>
     </div>
 }
