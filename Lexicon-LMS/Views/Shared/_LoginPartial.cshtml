@@ -9,7 +9,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Välkommen " + User.GetFullName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Välkommen " + User.GetFullName(), "ChangePassword", "Manage", routeValues: null, htmlAttributes: null)
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
     </ul> 
