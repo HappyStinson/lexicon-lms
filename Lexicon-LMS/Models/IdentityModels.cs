@@ -15,6 +15,8 @@ namespace Lexicon_LMS.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            userIdentity.AddClaim(new Claim("FullName", FullName));
+
             return userIdentity;
         }
 
@@ -46,10 +48,10 @@ namespace Lexicon_LMS.Models
         {
         }
 
-        public DbSet<Models.Activity> Activities { get; set;  }
-        public DbSet<Models.ActivityType> ActivityTypes { get; set; }
-        public DbSet<Models.Course> Courses { get; set; }
-        public DbSet<Models.Module> Modules { get; set; }
+        public DbSet<Activity> Activities { get; set;  }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Module> Modules { get; set; }
 
         public static ApplicationDbContext Create()
         {

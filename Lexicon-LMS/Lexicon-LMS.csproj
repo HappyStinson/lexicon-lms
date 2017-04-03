@@ -176,6 +176,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ClaimsExtension.cs" />
     <Compile Include="Migrations\201703300909550_init.cs" />
     <Compile Include="Migrations\201703300909550_init.Designer.cs">
       <DependentUpon>201703300909550_init.cs</DependentUpon>
