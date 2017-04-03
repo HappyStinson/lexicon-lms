@@ -71,7 +71,7 @@ namespace Lexicon_LMS.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Du måste ange ett lösenord")]
-        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 2)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
