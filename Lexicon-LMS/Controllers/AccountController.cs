@@ -1,12 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Lexicon_LMS.Models;
@@ -54,6 +50,20 @@ namespace Lexicon_LMS.Controllers
         }     
         
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Start()
+        {
+            if (User.IsInRole("teacher"))
+                return RedirectToAction("Index", "Courses");
+            else if (User.IsInRole("student"))
+            {
+                var userId = User.Identity.GetUserId();
+                var courseId = db.Users.First(u => u.Id == userId).CourseId;
+                return RedirectToAction("Details", "Courses", new { id = courseId });
+            }
+            else
+                return RedirectToAction("Login");
+        }
 
         // GET: /Account/Users
         public ActionResult Users()
