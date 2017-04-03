@@ -65,20 +65,20 @@ namespace Lexicon_LMS.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Du måste ange en e-postaddress")]
         [EmailAddress]
         [Display(Name = "E-post")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Du måste ange ett lösenord")]
+        [StringLength(100, ErrorMessage = "Lösenordet måste vara minst {2} tecken långt", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Bekräfta lösenordet")]
-        [Compare("Lösenord", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Lösenorden är inte likadana")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Ange en kurs")]
@@ -95,8 +95,8 @@ namespace Lexicon_LMS.Models
         [StringLength(32)]
         public string LastName { get; set; }
 
-        [Display(Name = "Fullständigt namn")]
-        public string FullName { get { return FirstName + " " + LastName; } }
+        [Display(Name = "Registrera som lärare?")]
+        public bool IsTeacher { get; set; }
     }
 
     public class ResetPasswordViewModel
