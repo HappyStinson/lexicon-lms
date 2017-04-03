@@ -126,7 +126,7 @@ namespace Lexicon_LMS.Controllers
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {  id = course.Id});
             }
             return View(course);
         }
