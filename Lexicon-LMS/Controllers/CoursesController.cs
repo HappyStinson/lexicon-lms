@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -36,8 +37,35 @@ namespace Lexicon_LMS.Controllers
                 return HttpNotFound();
             }
 
-            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+            List<Activity> ongoingActivities = new List<Activity>();
 
+            foreach (var module in course.Modules)
+            {
+                var start = module.StartDate;
+                var end = module.EndDate;
+               
+                if (start.CompareTo(DateTime.Today) <= 0 && end.CompareTo(DateTime.Today) >= 0)
+                {
+                    ViewBag.ShowModuleContent = module.Name;
+
+
+                    foreach (var activity in module.Actvities)
+                    {
+                        var astart = activity.StartDate;
+                        var aend = activity.EndDate;
+                        if (astart.CompareTo(DateTime.Today) <= 0 && aend.CompareTo(DateTime.Today) >= 0)
+                        {
+                            ongoingActivities.Add(activity);                           
+                        }
+                    }                  
+                }       
+                 
+            }
+            if (ongoingActivities != null) {
+                ViewBag.ShowActivityContent = ongoingActivities;
+            }  
+                 
+            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
             return View(course);
         }
 
