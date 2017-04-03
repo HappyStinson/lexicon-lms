@@ -1,5 +1,5 @@
-﻿@model Lexicon_LMS.Models.Course
-
+﻿@using Lexicon_LMS.Models;
+@model Lexicon_LMS.Models.Course
 
 @{
     ViewBag.Title = "Details";
@@ -10,6 +10,17 @@
     Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
 </h2>
 
+<h3>Pågående Modul:@ViewBag.ShowModuleContent</h3>
+
+<h3>Pågående Aktiviteter:</h3>
+
+    @foreach (var item in ViewBag.ShowActivityContent as ICollection<Activity>)
+    {
+         @item.Name
+        <br />
+      
+    }
+<br />
 <hr />
 
 <div class="col-md-4">
