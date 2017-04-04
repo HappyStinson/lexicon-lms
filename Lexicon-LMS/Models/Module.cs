@@ -32,7 +32,7 @@ namespace Lexicon_LMS.Models
         public int CourseId { get; set; }
 
         // Navigation property    
-        public virtual ICollection<Activity> Actvities { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
         public virtual Course Course { get; set; }
     }
 }
