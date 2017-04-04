@@ -10,88 +10,108 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+      <hr />
+      @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+      @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+      <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+          @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
+      </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
+      <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+          @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
+      </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-            </div>
+      <div class="form-group">
+        @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+          @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
+      </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-            </div>
+      <div class="form-group">
+        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+          @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
+      </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
-            </div>
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+          <input type="submit" value="Spara" class="btn btn-default" />
         </div>
+      </div>
     </div>
 }
 
 @if (Model.Modules != null && Model.Modules.Count > 0)
 {
-  <h4>
-    Kursmoduler
-  </h4>
+    <h4>
+      Kursmoduler
+    </h4>
 
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
-    @foreach (var item in Model.Modules)
-    {
+  foreach (var module in Model.Modules)
+  {
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
 
-              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#@item.Id" aria-expanded="false" aria-controls="@item.Id">
-                @item.Name
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#m-@module.Id" aria-expanded="false" aria-controls="m-@module.Id">
+                @module.Name
               </a>
-              @Html.ActionLink("Ändra modul", "Edit", "Modules", new { id = item.Id }, new { @class = "btn btn-default btn-xs" })
-              @Html.ActionLink("Ta bort modul", "Delete", "Modules", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+              @Html.ActionLink("Ändra modul", "Edit", "Modules", new { id = module.Id }, new { @class = "btn btn-default btn-xs" })
+              @Html.ActionLink("Ta bort modul", "Delete", "Modules", new { id = module.Id }, new { @class = "btn btn-danger btn-xs" })
             </h4>
           </div>
-          <div id="@item.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+          <div id="m-@module.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+
             <div class="panel-body">
-              @item.Description
+              Modulbeskrivning: @Html.DisplayFor(modelItem => module.Description)<br />
+              Pågår mellan @Html.DisplayFor(modelItem => module.StartDate) - @Html.DisplayFor(modelItem => module.EndDate)<br />
+              Aktiviteter
+              @foreach (var activity in module.Activities)
+                    {
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#a-@activity.Id" aria-expanded="false" aria-controls="a-@activity.Id">
+                          @activity.Name
+                        </a>
+                        @Html.ActionLink("Ändra aktivitet", "Edit", "Activities", new { id = activity.Id }, new { @class = "btn btn-default btn-xs" })
+                        @Html.ActionLink("Ta bort aktivitet", "Delete", "Activities", new { id = activity.Id }, new { @class = "btn btn-danger btn-xs" })
+                      </h4>
+                    </div>
+                    <div id="a-@activity.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                      <div class="panel-body">
+                        Aktivitetstyp:@Html.DisplayFor(modelItem => activity.Type.Name)<br />
+                        Pågår mellan @Html.DisplayFor(modelItem => activity.StartDate) - @Html.DisplayFor(modelItem => activity.EndDate)<br />
+                        Aktivitetsbeskrivning: @Html.DisplayFor(modelItem => activity.Description)<br />
+                      </div>
+                    </div>
+                  </div>
+              }
             </div>
           </div>
         </div>
-    }
-
-  </div>
+  }
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till kursöversikten", "Index")
+  @Html.ActionLink("Tillbaka till kursöversikten", "Index")
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+  @Scripts.Render("~/bundles/jqueryval")
 }

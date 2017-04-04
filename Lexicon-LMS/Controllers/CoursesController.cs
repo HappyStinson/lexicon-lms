@@ -41,17 +41,20 @@ namespace Lexicon_LMS.Controllers
 
             List<Activity> ongoingActivities = new List<Activity>();
 
+            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+
             foreach (var module in course.Modules)
             {
                 var start = module.StartDate;
                 var end = module.EndDate;
+
+                module.Activities =  module.Activities.OrderBy(a => a.StartDate).ToList();
                
                 if (start.CompareTo(DateTime.Today) <= 0 && end.CompareTo(DateTime.Today) >= 0)
                 {
                     ViewBag.ShowModuleContent = module.Name;
 
-
-                    foreach (var activity in module.Actvities)
+                    foreach (var activity in module.Activities)
                     {
                         var astart = activity.StartDate;
                         var aend = activity.EndDate;
@@ -66,8 +69,7 @@ namespace Lexicon_LMS.Controllers
             if (ongoingActivities != null) {
                 ViewBag.ShowActivityContent = ongoingActivities;
             }  
-                 
-            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+
             return View(course);
         }
 
@@ -130,6 +132,13 @@ namespace Lexicon_LMS.Controllers
             {
                 return HttpNotFound();
             }
+
+            course.Modules = course.Modules.OrderBy(m => m.StartDate).ToList();
+            foreach (var module in course.Modules)
+            {
+                module.Activities = module.Activities.OrderBy(a => a.StartDate).ToList();
+            }
+
             return View(course);
         }
 
