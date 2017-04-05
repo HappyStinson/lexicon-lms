@@ -7,13 +7,13 @@ namespace Lexicon_LMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class seed7 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(seed7));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703300909550_init"; }
+            get { return "201704051409014_seed7"; }
         }
         
         string IMigrationMetadata.Source
