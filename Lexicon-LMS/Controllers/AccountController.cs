@@ -69,13 +69,21 @@ namespace Lexicon_LMS.Controllers
 
         public ActionResult Users()
         {
-            List<UserViewModel> users = new List<UserViewModel>();
-            var list = db.Users.ToList();
-            foreach (var user in list)
+            var users = db.Users.ToList();
+
+            if (User.IsInRole("student"))
+            {
+                var userId = User.Identity.GetUserId();
+                var courseId = db.Users.First(u => u.Id == userId).CourseId;
+                users = users.Where(u => u.CourseId == courseId).ToList();
+            }
+
+            var userViewModel = new List<UserViewModel>();
+            foreach (var user in users)
             {
                 var role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev";
 
-                users.Add(new UserViewModel
+                userViewModel.Add(new UserViewModel
                 {
                     Id = user.Id,
                     CourseName = user.Course.Name,
@@ -87,7 +95,7 @@ namespace Lexicon_LMS.Controllers
 
             ViewBag.CurrentUserId = User.Identity.GetUserId();
 
-            return View(users);
+            return View(userViewModel);
         }
 
         // GET: Account/Edit/GUID
