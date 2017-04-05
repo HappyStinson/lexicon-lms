@@ -25,9 +25,9 @@ else
     <th>
       @Html.DisplayNameFor(user => user.Email)
     </th>
-        <th>
-          @Html.DisplayNameFor(user => user.Role)
-        </th>
+    <th>
+      @Html.DisplayNameFor(user => user.Role)
+    </th>
   </tr>
 
   @foreach (var user in Model)
@@ -46,16 +46,18 @@ else
           @Html.DisplayFor(modelItem => user.Email)
         </td>
 
-            <td>
-              @Html.DisplayFor(modelItem => user.Role)
-            </td>
+        <td>
+          @Html.DisplayFor(modelItem => user.Role)
+        </td>
         @if (User.IsInRole("teacher"))
-                {
-                <td>
-                  @Html.ActionLink("Ändra", "Edit", new { id = user.Id }) |
-                  @Html.ActionLink("Detaljer", "Details", new { id = user.Id }) |
-                  @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
-                </td>
+        {
+            <td>
+              @Html.ActionLink("Ändra", "Edit", new { id = user.Id })
+              @if (!ViewBag.CurrentUserId.Equals(user.Id))
+              {
+              @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
+            }
+            </td>
         }
       </tr>
   }
