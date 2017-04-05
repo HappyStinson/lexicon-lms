@@ -17,7 +17,7 @@ namespace Lexicon_LMS.Migrations
 
 
       protected override void Seed(Lexicon_LMS.Models.ApplicationDbContext context)      {
-
+            
             var activityTypes = new ActivityType[]
             {
                new ActivityType {Name = "E-learning" },
@@ -25,8 +25,25 @@ namespace Lexicon_LMS.Migrations
                new ActivityType {Name = "Inlämningsuppgift" },
             };
 
-            context.ActivityTypes.AddRange(activityTypes);
+            // context.ActivityTypes.AddRange(activityTypes);
+
+            foreach (var type in activityTypes)
+            {
+                string activityTypeName = type.Name;
+                if (!context.ActivityTypes.Any(a => a.Name == activityTypeName))
+                {
+                    context.ActivityTypes.Add(type);
+                }
+            }                                      
+      
             context.SaveChanges();                          // ID genereras när man sparar contexten
+
+            int[] activityTypeIds = new int[3];
+            for (int i = 0; i < activityTypeIds.Length; i++)
+            {
+                string name = activityTypes[i].Name;
+                activityTypeIds[i] = context.Courses.First(a => a.Name == name).Id;
+            }        
 
             // int activityIdLecture = context.ActivityTypes.First(a => a.Name == "Föreläsning").Id;
             // int activityIdElearning = context.ActivityTypes.First(a => a.Name == "E-learning").Id;
@@ -39,58 +56,90 @@ namespace Lexicon_LMS.Migrations
                new Course {Name = ".NET", Description = ".NET Vidareutbildning", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 7, 14) },
             };
 
-            context.Courses.AddRange(courses);
+            // context.Courses.AddRange(courses);
+
+            foreach (var course in courses)
+            {
+                string courseName = course.Name;
+                if (!context.Courses.Any(a => a.Name == courseName))
+                {
+                    context.Courses.Add(course);
+                }
+            }
+
             context.SaveChanges();                          // ID genereras när man sparar contexten
 
-            // int courseIdJava = context.Courses.First(c => c.Name == ".Java").Id;
+            int[] courseIds = new int[]
+            {
+                context.Courses.First(c => c.Name == "Java").Id,
+                context.Courses.First(c => c.Name == ".NET").Id,
+            };
+          
+            // int courseIdJava = context.Courses.First(c => c.Name == "Java").Id;
             // int courseIdNET = context.Courses.First(c => c.Name == ".NET").Id;         
                            
 
             var modules = new Module[]
            {
-               new Module {Name = "Java Programmering", Description = "Grundläggande programmering i Java, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 5, 5) , CourseId = courses[0].Id},
-               new Module {Name = "C# Programmering", Description = "Grundläggande programmering i C#, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 5, 19), CourseId = courses[1].Id},
-               new Module {Name = "Webbutveckling", Description = "HTML, CSS, och JavaScript", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 19) , CourseId = courses[0].Id},
-               new Module {Name = "Webbutveckling", Description = "HTML, CSS, och JavaScript", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 6, 2) , CourseId = courses[1].Id},
-               new Module {Name = "Test", Description = "ISTQB Foundation", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 5, 26) , CourseId = courses[0].Id},
-               new Module {Name = "Test", Description = "ISTQB Foundation", StartDate = new DateTime(2017, 6, 5), EndDate = new DateTime(2017, 6, 9), CourseId = courses[1].Id },
-               new Module {Name = "Java EE", Description = "Projektarbete i Java EE", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 6, 30) , CourseId = courses[0].Id},
-               new Module {Name = "ASP.NET MVC", Description = "Projektarbete i ASP.NET MVC", StartDate = new DateTime(2017, 6, 12), EndDate = new DateTime(2017, 7, 14) , CourseId = courses[1].Id},
+               new Module {Name = "Java Programmering", Description = "Grundläggande programmering i Java, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 5, 5) , CourseId = courseIds[0]},
+               new Module {Name = "C# Programmering", Description = "Grundläggande programmering i C#, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 5, 19), CourseId = courseIds[1]},
+               new Module {Name = "Webbutveckling", Description = "HTML, CSS, och JavaScript", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 19) , CourseId = courseIds[0]},
+               new Module {Name = "Webbutveckling", Description = "HTML, CSS, och JavaScript", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 6, 2) , CourseId = courseIds[1]},
+               new Module {Name = "Test", Description = "ISTQB Foundation", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 5, 26) , CourseId = courseIds[0]},
+               new Module {Name = "Test", Description = "ISTQB Foundation", StartDate = new DateTime(2017, 6, 5), EndDate = new DateTime(2017, 6, 9), CourseId = courseIds[1]},
+               new Module {Name = "Java EE", Description = "Projektarbete i Java EE", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 6, 30) , CourseId = courseIds[0]},
+               new Module {Name = "ASP.NET MVC", Description = "Projektarbete i ASP.NET MVC", StartDate = new DateTime(2017, 6, 12), EndDate = new DateTime(2017, 7, 14) , CourseId = courseIds[1]},
 
            };
 
-            context.Modules.AddRange(modules);
+            // context.Modules.AddRange(modules);
+
+            foreach (var module in modules)
+            {
+                string moduleName = module.Name;
+                int courseId = module.CourseId;
+
+                if (!context.Modules.Any(m => (m.Name == moduleName) && (m.CourseId == courseId)))
+                {
+                    context.Modules.Add(module);
+                }
+            }
+
             context.SaveChanges();                          // ID genereras när man sparar contexten
 
-            // int moduleIdJava = context.Modules.First(m => (m.Name.Contains("Java")) && m.Description.Contains("Java")).Id;     
+            int[] moduleIds = new int[8];
+            for (int i = 0; i < moduleIds.Length; i++)
+            {
+                string moduleName = modules[i].Name;
+                int courseId = modules[i].CourseId;
+                moduleIds[i] = context.Modules.First(m => (m.Name == moduleName) && (m.CourseId == courseId)).Id;
+            }
 
             var activities = new Activity[]
             {
-                 new Activity {Name = "E-learning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 4, 21) , ActivityTypeId = activityTypes[0].Id, ModuleId = modules[0].Id},
-                 new Activity {Name = "E-learning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 5, 5) , ActivityTypeId = activityTypes[0].Id, ModuleId = modules[1].Id},
-                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 4, 24) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[0].Id},
-                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 8) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[1].Id},
-                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 4, 25), EndDate = new DateTime(2017, 4, 28) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[0].Id},
-                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 9), EndDate = new DateTime(2017, 5, 12) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[1].Id},
-                 new Activity {Name = "Föreläsning 2", Description = "Objektorienterad Programmering", StartDate = new DateTime(2017, 5, 2), EndDate = new DateTime(2017, 5, 2) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[0].Id},
-                 new Activity {Name = "Föreläsning 2", Description = "Objektorienterad Programmering", StartDate = new DateTime(2017, 5, 15), EndDate = new DateTime(2017, 5, 15) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[1].Id},
-                 new Activity {Name = "Inlämningsuppgift 2", Description = "Inlämningsuppgift 2, Garage 2.0", StartDate = new DateTime(2017, 5, 3), EndDate = new DateTime(2017, 5, 5) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[0].Id},
-                 new Activity {Name = "Inlämningsuppgift 2", Description = "Inlämningsuppgift 2, Garage 2.0", StartDate = new DateTime(2017, 5, 16), EndDate = new DateTime(2017, 5, 19) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[1].Id},
-                 new Activity {Name = "E-learning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 12) , ActivityTypeId = activityTypes[0].Id, ModuleId = modules[2].Id},
-                 new Activity {Name = "E-learning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 5, 26) , ActivityTypeId = activityTypes[0].Id, ModuleId = modules[3].Id},               
-                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 15), EndDate = new DateTime(2017, 5, 19) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[2].Id},
-                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 6, 2) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[3].Id},
-                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till projektarbetet", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 5, 29) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[6].Id},
-                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till projektarbetet", StartDate = new DateTime(2017, 6, 12), EndDate = new DateTime(2017, 6, 12) , ActivityTypeId = activityTypes[1].Id, ModuleId = modules[7].Id},
-                 new Activity {Name = "Projektarbete", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 30), EndDate = new DateTime(2017, 6, 30) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[6].Id},
-                 new Activity {Name = "Projektarbete", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 6, 13), EndDate = new DateTime(2017, 7, 14) , ActivityTypeId = activityTypes[2].Id, ModuleId = modules[7].Id},
+                 new Activity {Name = "E-learning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 4, 21) , ActivityTypeId = activityTypeIds[0], ModuleId = moduleIds[0]},
+                 new Activity {Name = "E-learning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 5, 5) , ActivityTypeId = activityTypeIds[0], ModuleId = moduleIds[1]},
+                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 4, 24) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[0]},
+                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 8) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[1]},
+                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 4, 25), EndDate = new DateTime(2017, 4, 28) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[0]},
+                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 9), EndDate = new DateTime(2017, 5, 12) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[1]},
+                 new Activity {Name = "Föreläsning 2", Description = "Objektorienterad Programmering", StartDate = new DateTime(2017, 5, 2), EndDate = new DateTime(2017, 5, 2) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[0]},
+                 new Activity {Name = "Föreläsning 2", Description = "Objektorienterad Programmering", StartDate = new DateTime(2017, 5, 15), EndDate = new DateTime(2017, 5, 15) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[1]},
+                 new Activity {Name = "Inlämningsuppgift 2", Description = "Inlämningsuppgift 2, Garage 2.0", StartDate = new DateTime(2017, 5, 3), EndDate = new DateTime(2017, 5, 5) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[0]},
+                 new Activity {Name = "Inlämningsuppgift 2", Description = "Inlämningsuppgift 2, Garage 2.0", StartDate = new DateTime(2017, 5, 16), EndDate = new DateTime(2017, 5, 19) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[1]},
+                 new Activity {Name = "E-learning 1", Description = "Introduktion till Java", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 12) , ActivityTypeId = activityTypeIds[0], ModuleId = moduleIds[2]},
+                 new Activity {Name = "E-learning 1", Description = "Introduktion till C#", StartDate = new DateTime(2017, 5, 22), EndDate = new DateTime(2017, 5, 26) , ActivityTypeId = activityTypeIds[0], ModuleId = moduleIds[3]},               
+                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 15), EndDate = new DateTime(2017, 5, 19) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[2]},
+                 new Activity {Name = "Inlämningsuppgift 1", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 6, 2) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[3]},
+                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till projektarbetet", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 5, 29) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[6]},
+                 new Activity {Name = "Föreläsning 1", Description = "Introduktion till projektarbetet", StartDate = new DateTime(2017, 6, 12), EndDate = new DateTime(2017, 6, 12) , ActivityTypeId = activityTypeIds[1], ModuleId = moduleIds[7]},
+                 new Activity {Name = "Projektarbete", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 5, 30), EndDate = new DateTime(2017, 6, 30) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[6]},
+                 new Activity {Name = "Projektarbete", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 6, 13), EndDate = new DateTime(2017, 7, 14) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[7]},
             };
 
-            context.Activities.AddRange(activities);
+            // context.Activities.AddRange(activities);
             context.SaveChanges();                          // ID genereras när man sparar contexten
-
-
-
+            
 
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
@@ -135,7 +184,6 @@ namespace Lexicon_LMS.Migrations
                     if (!result.Succeeded)
                     {
                         throw new Exception(string.Join("\n", result.Errors));
-
                     }
                 }
             }
