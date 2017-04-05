@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Lexicon_LMS.Models;
+using System.Collections.Generic;
+using System.Net;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -65,14 +67,122 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Login");
         }
 
-        // GET: /Account/Users
         public ActionResult Users()
         {
-            var users = db.Users; 
+            List<UserViewModel> users = new List<UserViewModel>();
+            var list = db.Users.ToList();
+            foreach (var user in list)
+            {
+                var role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev";
 
-            return View(users.ToList());
-        }             
+                users.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    CourseName = user.Course.Name,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Role = role
+                });
+            }
 
+            ViewBag.CurrentUserId = User.Identity.GetUserId();
+
+            return View(users);
+        }
+
+        // GET: Account/Edit/GUID
+        [Authorize(Roles = "teacher")]
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
+            return View(user);
+        }
+
+        // POST: Account/Edit/GUID
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id, UserName, Email, CourseId, FirstName, LastName")] ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                var u = UserManager.FindById(user.Id);
+                u.UserName = user.UserName;
+                u.Email = user.Email;
+                u.CourseId = user.CourseId;
+                u.FirstName = user.FirstName;
+                u.LastName = user.LastName;
+
+                var result = await UserManager.UpdateAsync(u);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Users");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
+            return View(user);
+        }
+
+        // GET: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (user.Id.Equals(User.Identity.GetUserId()))
+                return RedirectToAction("Users");
+
+            var viewModel = new UserViewModel
+            {
+                Id = user.Id,
+                CourseName = user.Course.Name,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev"
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            var user = UserManager.FindById(id);
+
+            var result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+            }
+
+            return RedirectToAction("Users");
+        }
 
         //
         // GET: /Account/Login
