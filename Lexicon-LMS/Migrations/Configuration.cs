@@ -160,9 +160,9 @@ namespace Lexicon_LMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emails = new[] { "dimitris@lxicon.se", "dtrump@lxicon.se", "vputin@lxicon.se" };
-            var firstnames = new[] { "Dimitris", "Donald", "Vladimir" };
-            var lastnames = new[] { "Björlingh", "Trump", "Putin" };
+            var emails = new[] { "oscar@lxicon.se", "dimitris@lxicon.se", "jhellman@lxicon.se", "dtrump@lxicon.se", "vputin@lxicon.se" };
+            var firstnames = new[] { "Oscar", "Dimitris", "John", "Donald", "Vladimir" };
+            var lastnames = new[] { "Jacobsson", "Björlingh", "Hellman", "Trump", "Putin" };
 
             for (int i = 0; i < emails.Count(); i++)
             {
@@ -190,8 +190,14 @@ namespace Lexicon_LMS.Migrations
 
             context.SaveChanges();
 
-            var teacherUser = userManager.FindByName("dimitris@lxicon.se");
-            userManager.AddToRole(teacherUser.Id, "teacher");
+            var teacherUser1 = userManager.FindByName("oscar@lxicon.se");
+            userManager.AddToRole(teacherUser1.Id, "teacher");
+
+            var teacherUser2 = userManager.FindByName("dimitris@lxicon.se");
+            userManager.AddToRole(teacherUser2.Id, "teacher");
+
+            var teacherUser3 = userManager.FindByName("jhellman@lxicon.se");
+            userManager.AddToRole(teacherUser3.Id, "teacher");
 
             var studentUser1 = userManager.FindByName("dtrump@lxicon.se");
             userManager.AddToRole(studentUser1.Id, "student");
