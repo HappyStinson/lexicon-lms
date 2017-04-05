@@ -38,6 +38,7 @@
     <div class="navbar>
       <div class="container">
         <a href="@Url.Action("Start", "Account")" class="navbar-btn">Start</a>
+        <a href="@Url.Action("Users", "Account")" class="navbar-btn">Klasslista</a>
         @if (User.IsInRole("teacher"))
         {
           <a href="@Url.Action("Register", "Account")" class="navbar-btn">Registrera användare</a>

@@ -127,4 +127,21 @@ namespace Lexicon_LMS.Models
         [Display(Name = "E-post")]
         public string Email { get; set; }
     }
+
+    public class UserViewModel
+    {
+        public string Id { get; set; }
+
+        [Display(Name = "Kurs")]
+        public string CourseName { get; set; }
+
+        [Display(Name = "Namn")]
+        public string FullName { get; set; }
+
+        [Display(Name = "E-post")]
+        public string Email { get; set; }
+
+        [Display(Name = "Roll")]
+        public string Role { get; set; }
+    }
 }

@@ -1,61 +1,63 @@
-﻿@model IEnumerable<Lexicon_LMS.Models.ApplicationUser>
+﻿@model IEnumerable<Lexicon_LMS.Models.UserViewModel>
 
-@{
-    ViewBag.Title = "Användare";
+@if (User.IsInRole("teacher"))
+{
+  ViewBag.Title = "Användare";
+
+    <h2>Användare</h2>
 }
-
-<h2>Användare</h2>
-
+else
+{
+  ViewBag.Title = "Klasskamrater";
+    <h2>Klasskamrater</h2>
+}
 <table class="table">
-    <tr>
+  <tr>
+    @if (User.IsInRole("teacher"))
+    {
         <th>
-            @Html.DisplayNameFor(model => model.Course.Name)
+          @Html.DisplayNameFor(user => user.CourseName)
         </th>
+    }
+    <th>
+      @Html.DisplayNameFor(user => user.FullName)
+    </th>
+    <th>
+      @Html.DisplayNameFor(user => user.Email)
+    </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+          @Html.DisplayNameFor(user => user.Role)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            E-post
-        </th>    
-        <th>
-            Roll
-        </th>
-        <th></th>
-    </tr>
+  </tr>
 
-@foreach (var item in Model){
-   
-           <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>          
-                <td>
-                    Roll
-                </td>
+  @foreach (var user in Model)
+  {
+      <tr>
+        @if (User.IsInRole("teacher"))
+        {
+            <td>
+              @Html.DisplayFor(modelItem => user.CourseName)
+            </td>
+        }
+        <td>
+          @Html.DisplayFor(modelItem => user.FullName)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => user.Email)
+        </td>
 
-                @if (User.IsInRole("teacher"))
+            <td>
+              @Html.DisplayFor(modelItem => user.Role)
+            </td>
+        @if (User.IsInRole("teacher"))
                 {
                 <td>
-                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Detaljer", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
+                  @Html.ActionLink("Ändra", "Edit", new { id = user.Id }) |
+                  @Html.ActionLink("Detaljer", "Details", new { id = user.Id }) |
+                  @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
                 </td>
-                }
-            </tr>
-      
-   
-}
+        }
+      </tr>
+  }
 
 </table>
