@@ -85,6 +85,8 @@ namespace Lexicon_LMS.Controllers
                 });
             }
 
+            ViewBag.CurrentUserId = User.Identity.GetUserId();
+
             return View(users);
         }
 
@@ -96,7 +98,7 @@ namespace Lexicon_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = db.Users.Find(id);
+            var user = UserManager.FindById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -134,6 +136,52 @@ namespace Lexicon_LMS.Controllers
             // If we got this far, something failed, redisplay form
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
             return View(user);
+        }
+
+        // GET: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (user.Id.Equals(User.Identity.GetUserId()))
+                return RedirectToAction("Users");
+
+            var viewModel = new UserViewModel
+            {
+                Id = user.Id,
+                CourseName = user.Course.Name,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev"
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            var user = UserManager.FindById(id);
+
+            var result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+            }
+
+            return RedirectToAction("Users");
         }
 
         //
