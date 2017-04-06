@@ -177,9 +177,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ClaimsExtension.cs" />
-    <Compile Include="Migrations\201703300909550_init.cs" />
-    <Compile Include="Migrations\201703300909550_init.Designer.cs">
-      <DependentUpon>201703300909550_init.cs</DependentUpon>
+    <Compile Include="Migrations\201704051356585_seed6.cs" />
+    <Compile Include="Migrations\201704051356585_seed6.Designer.cs">
+      <DependentUpon>201704051356585_seed6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704060726230_seed23.cs" />
+    <Compile Include="Migrations\201704060726230_seed23.Designer.cs">
+      <DependentUpon>201704060726230_seed23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704060740032_seed24.cs" />
+    <Compile Include="Migrations\201704060740032_seed24.Designer.cs">
+      <DependentUpon>201704060740032_seed24.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -291,8 +299,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703300909550_init.resx">
-      <DependentUpon>201703300909550_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704051356585_seed6.resx">
+      <DependentUpon>201704051356585_seed6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704060726230_seed23.resx">
+      <DependentUpon>201704060726230_seed23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704060740032_seed24.resx">
+      <DependentUpon>201704060740032_seed24.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
