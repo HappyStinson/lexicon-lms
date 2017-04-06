@@ -24,35 +24,56 @@ namespace Lexicon_LMS.Migrations
                new ActivityType {Name = "E-learning" },
                new ActivityType {Name = "Föreläsning" },
                new ActivityType {Name = "Inlämningsuppgift" },
-            };           
+            };
 
-            context.ActivityTypes.AddRange(activityTypes);
-            context.SaveChanges();                          // ID genereras när man sparar contexten                
-        
+            int[] activityTypeIds = new int[activityTypes.Length];
+            int ctr = 0;
 
-            int[] activityTypeIds = new int[3];
-            for (int i = 0; i < activityTypeIds.Length; i++)
+            foreach (var type in activityTypes)
             {
-                activityTypeIds[i] = activityTypes[i].Id;               
+                string activityTypeName = type.Name;
+                if (!context.ActivityTypes.Any(a => a.Name == activityTypeName))
+                {
+                    context.ActivityTypes.Add(type);
+                    context.SaveChanges();                          // ID genereras när man sparar contexten
+                    activityTypeIds[ctr] = activityTypes[ctr].Id;
+                }
+                else
+                {                
+                    var activityType = context.ActivityTypes.First(a => a.Name == activityTypeName);
+                    activityTypeIds[ctr] = activityType.Id;
+                }
+
+                ctr++;
             }
-           
 
             var courses = new Course[]
             {
                new Course {Name = "Java", Description = "Java Vidareutbildning", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 6, 30) },
                new Course {Name = ".NET", Description = ".NET Vidareutbildning", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 7, 14) },
             };
+           
+            int[] courseIds = new int[courses.Length];
+            ctr = 0;
 
-            context.Courses.AddRange(courses);          
-            context.SaveChanges();                    
-                        
-            int[] courseIds = new int[2]
+            foreach (var course in courses)
             {
-                courses[0].Id,
-                courses[1].Id,                
-            };            
+                string courseName = course.Name;
+                if (!context.Courses.Any(c => c.Name == courseName))
+                {
+                    context.Courses.Add(course);
+                    context.SaveChanges();                          // ID genereras när man sparar contexten
+                    courseIds[ctr] = courses[ctr].Id;
+                }
+                else
+                {                   
+                    var oldCourse = context.Courses.First(a => a.Name == courseName);
+                    courseIds[ctr] = oldCourse.Id;
+                }
 
-       
+                ctr++;
+            }                          
+
             var modules = new Module[]
             {
                new Module {Name = "Java Programmering", Description = "Grundläggande programmering i Java, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 5, 5) , CourseId = courseIds[0]},
@@ -66,15 +87,28 @@ namespace Lexicon_LMS.Migrations
 
             };
 
-            context.Modules.AddRange(modules);
-            context.SaveChanges();
+            int[] moduleIds = new int[modules.Length];
+            ctr = 0;
 
-            int[] moduleIds = new int[8];
-            for (int i = 0; i < moduleIds.Length; i++)
-            {       
-               moduleIds[i] = modules[i].Id;
-            }  
-                   
+            foreach (var module in modules)
+            {
+                string moduleName = module.Name;
+                int courseId = module.CourseId;        
+                if (!context.Modules.Any(m => (m.Name == moduleName) && (m.CourseId == courseId)))
+                    {
+                    context.Modules.Add(module);
+                    context.SaveChanges();                          // ID genereras när man sparar contexten
+                    moduleIds[ctr] = modules[ctr].Id;
+                }
+                else
+                {
+                    var oldModule = context.Modules.First(m => (m.Name == moduleName) && (m.CourseId == courseId));
+                    moduleIds[ctr] = oldModule.Id;
+                }
+
+                ctr++;
+            }
+
 
             var activities = new Activity[]
             {
@@ -98,9 +132,27 @@ namespace Lexicon_LMS.Migrations
                  new Activity {Name = "Projektarbete", Description = "Inlämningsuppgift 1, Garage 1.0", StartDate = new DateTime(2017, 6, 13), EndDate = new DateTime(2017, 7, 14) , ActivityTypeId = activityTypeIds[2], ModuleId = moduleIds[7]},
             };
 
-            context.Activities.AddRange(activities);
-            context.SaveChanges();                          // ID genereras när man sparar contexten
+            int[] activityIds = new int[activities.Length];
+            ctr = 0;
 
+            foreach (var activity in activities)
+            {
+                string activityName = activity.Name;
+                int moduleId = activity.ModuleId;
+                if (!context.Activities.Any(a => (a.Name == activityName) && (a.ModuleId == moduleId)))
+                {
+                    context.Activities.Add(activity);
+                    context.SaveChanges();                          // ID genereras när man sparar contexten
+                    activityIds[ctr] = activities[ctr].Id;
+                }
+                else
+                {
+                    var oldActivity = context.Activities.First(a => (a.Name == activityName) && (a.ModuleId == moduleId));
+                    activityIds[ctr] = oldActivity.Id;
+                }
+
+                ctr++;
+            }
 
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
@@ -167,9 +219,23 @@ namespace Lexicon_LMS.Migrations
             userManager.AddToRole(studentUser1.Id, "student");
 
             var studentUser2 = userManager.FindByName("vputin@lxicon.se");
-            userManager.AddToRole(studentUser2.Id, "student");
-        }      
+            userManager.AddToRole(studentUser2.Id, "student");      
 
+            var studentUser3 = userManager.FindByName("rex@lxicon.se");
+            userManager.AddToRole(studentUser3.Id, "student");
+
+            var studentUser4 = userManager.FindByName("rpriebus@lxicon.se");
+            userManager.AddToRole(studentUser4.Id, "student");
+
+            var studentUser5 = userManager.FindByName("sbannon@lxicon.se");
+            userManager.AddToRole(studentUser5.Id, "student");
+
+            var studentUser6 = userManager.FindByName("lende@lxicon.se");
+            userManager.AddToRole(studentUser6.Id, "student");
+
+            var studentUser7 = userManager.FindByName("pstore@lxicon.se");
+            userManager.AddToRole(studentUser7.Id, "student");
+        }      
 
     }
 }
