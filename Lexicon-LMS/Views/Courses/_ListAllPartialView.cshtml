@@ -9,13 +9,13 @@
             <th data-defaultsort='disabled'>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            <th> 
                 @Html.DisplayNameFor(model => model.StartDate)
-            </th>
+            </th>           
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
-            <th data-defaultsort='disabled'></th>
+            <th></th>
         </tr>
     </thead>
 
@@ -30,10 +30,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @Html.DisplayFor(modelItem => item.StartDate.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
+                @Html.DisplayFor(modelItem => item.EndDate.Date)
             </td>
             <td>
                 @Html.ActionLink("Lägg till aktivitet", "Create", "Activities", new { courseId = item.Id }, new { @class = "btn btn-default btn-xs" })
