@@ -121,9 +121,9 @@ namespace Lexicon_LMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
-            var emails = new[] { "oscar@lxicon.se", "dimitris@lxicon.se", "jhellman@lxicon.se", "dtrump@lxicon.se", "vputin@lxicon.se" };
-            var firstnames = new[] { "Oscar", "Dimitris", "John", "Donald", "Vladimir" };
-            var lastnames = new[] { "Jacobsson", "Björlingh", "Hellman", "Trump", "Putin" };
+            var emails = new[] { "oscar@lxicon.se", "dimitris@lxicon.se", "jhellman@lxicon.se", "dtrump@lxicon.se", "vputin@lxicon.se", "rex@lxicon.se", "rpriebus@lxicon.se", "sbannon@lxicon.se", "lende@lxicon.se", "pstore@lxicon.se"  };
+            var firstnames = new[] { "Oscar", "Dimitris", "John", "Donald", "Vladimir", "Rex", "Reince", "Steve", "Leif", "Per" };
+            var lastnames = new[] { "Jacobsson", "Björlingh", "Hellman", "Trump", "Putin", "Tillerson", "Priebus", "Bannon", "Den Ende", "Den Store" };
 
             int courseIndex = 1; 
 
