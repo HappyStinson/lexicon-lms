@@ -15,8 +15,7 @@ namespace Lexicon_LMS.Controllers
         // GET: Modules
         public ActionResult Index()
         {
-            var modules = db.Modules.Include(m => m.Course);
-            return View(modules.ToList());
+            return RedirectToAction("Start", "Account");
         }
 
         // GET: Modules/Details/5
