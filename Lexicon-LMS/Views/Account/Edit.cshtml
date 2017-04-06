@@ -1,4 +1,4 @@
-﻿@model Lexicon_LMS.Models.ApplicationUser
+﻿@model Lexicon_LMS.Models.EditUserViewModel
 
 @{
     ViewBag.Title = "Ändra användare";
@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.CurrentRoleName)
 
 
         <div class="form-group">
@@ -50,6 +50,21 @@
                 @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @if (ViewBag.CanEditRole)
+        {
+          <div class="form-group">
+            @Html.LabelFor(model => model.RoleName, "Roll", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              @Html.DropDownList("RoleName", null, htmlAttributes: new { @class = "form-control" })
+              @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+            </div>
+          </div>
+        }
+        else
+        {
+            @Html.HiddenFor(model => model.RoleName)
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
