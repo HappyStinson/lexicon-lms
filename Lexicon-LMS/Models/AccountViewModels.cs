@@ -144,4 +144,32 @@ namespace Lexicon_LMS.Models
         [Display(Name = "Roll")]
         public string Role { get; set; }
     }
+
+    public class EditUserViewModel
+    {
+        public string Id { get; set; }
+
+        [Display(Name = "Kurs")]
+        public int CourseId { get; set; }
+
+        [Required(ErrorMessage = "Ange Förnamn")]
+        [Display(Name = "Förnamn")]
+        [StringLength(32)]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Ange Efternamn")]
+        [Display(Name = "Efternamn")]
+        [StringLength(32)]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Du måste ange en e-postaddress")]
+        [EmailAddress]
+        [Display(Name = "E-post")]
+        public string Email { get; set; }
+
+        [Display(Name = "Roll")]
+        public string RoleName { get; set; }
+
+        public string CurrentRoleName { get; set; }
+    }
 }

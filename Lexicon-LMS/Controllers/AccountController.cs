@@ -99,7 +99,6 @@ namespace Lexicon_LMS.Controllers
         }
 
         // GET: Account/Edit/GUID
-        [Authorize(Roles = "teacher")]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -112,38 +111,79 @@ namespace Lexicon_LMS.Controllers
                 return HttpNotFound();
             }
 
+            var currentRoleName = UserManager.GetRoles(id).FirstOrDefault();
+
+            var viewModel = new EditUserViewModel
+            {
+                Id = user.Id,
+                CourseId = user.CourseId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                CurrentRoleName = currentRoleName
+            };
+            
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
-            return View(user);
+
+            ViewBag.CanEditRole = (user.Id == User.Identity.GetUserId()) ? false : true;
+            if (ViewBag.CanEditRole)
+                ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name", currentRoleName);
+            else
+                viewModel.RoleName = currentRoleName;
+
+            return View(viewModel);
         }
 
         // POST: Account/Edit/GUID
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id, UserName, Email, CourseId, FirstName, LastName")] ApplicationUser user)
+        public async Task<ActionResult> Edit(EditUserViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                var u = UserManager.FindById(user.Id);
-                u.UserName = user.UserName;
-                u.Email = user.Email;
-                u.CourseId = user.CourseId;
-                u.FirstName = user.FirstName;
-                u.LastName = user.LastName;
+                var user = UserManager.FindById(viewModel.Id);
+                user.UserName = viewModel.Email;
+                user.Email = viewModel.Email;
+                user.CourseId = viewModel.CourseId;
+                user.FirstName = viewModel.FirstName;
+                user.LastName = viewModel.LastName;
 
-                var result = await UserManager.UpdateAsync(u);
-                if (result.Succeeded)
+                IdentityResult result = null;
+                var modelError = false;
+                if (!viewModel.CurrentRoleName.Equals(viewModel.RoleName))
                 {
+                    result = UserManager.RemoveFromRole(user.Id, viewModel.CurrentRoleName);
+                    if (result.Succeeded)
+                    {
+                        result = UserManager.AddToRole(user.Id, viewModel.RoleName);
+                        if (!result.Succeeded)
+                        {
+                            AddErrors(result);
+                            modelError = true;
+                        }
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                        modelError = true;
+                    }
+                }
+
+                result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded && !modelError)
+                {                    
                     return RedirectToAction("Users");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
-            return View(user);
+            ViewBag.CanEditRole = (viewModel.Id == User.Identity.GetUserId()) ? false : true;
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", viewModel.CourseId);
+            ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name", viewModel.RoleName);
+            return View(viewModel);
         }
 
         // GET: Account/Delete/GUID
