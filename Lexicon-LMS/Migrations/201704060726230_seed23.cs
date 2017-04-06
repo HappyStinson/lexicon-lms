@@ -3,7 +3,7 @@ namespace Lexicon_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class seed7 : DbMigration
+    public partial class seed23 : DbMigration
     {
         public override void Up()
         {

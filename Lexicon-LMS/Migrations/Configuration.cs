@@ -24,36 +24,18 @@ namespace Lexicon_LMS.Migrations
                new ActivityType {Name = "E-learning" },
                new ActivityType {Name = "Föreläsning" },
                new ActivityType {Name = "Inlämningsuppgift" },
-            };
+            };           
 
             context.ActivityTypes.AddRange(activityTypes);
-            /*
-
-            foreach (var type in activityTypes)
-            {
-                string activityTypeName = type.Name;
-                if (!context.ActivityTypes.Any(a => a.Name == activityTypeName))
-                {
-                    context.ActivityTypes.Add(type);
-                }
-            }
-            */
-
-            context.SaveChanges();                          // ID genereras när man sparar contexten
+            context.SaveChanges();                          // ID genereras när man sparar contexten                
+        
 
             int[] activityTypeIds = new int[3];
             for (int i = 0; i < activityTypeIds.Length; i++)
             {
-                activityTypeIds[i] = activityTypes[i].Id; 
-
-                // string name = activityTypes[i].Name;
-                // activityTypeIds[i] = context.Courses.First(a => a.Name == name).Id;
+                activityTypeIds[i] = activityTypes[i].Id;               
             }
-
-            // int activityIdLecture = context.ActivityTypes.First(a => a.Name == "Föreläsning").Id;
-            // int activityIdElearning = context.ActivityTypes.First(a => a.Name == "E-learning").Id;
-            // int activityIdTask = context.ActivityTypes.First(a => a.Name == "Inlämningsuppgift").Id;
-
+           
 
             var courses = new Course[]
             {
@@ -61,37 +43,18 @@ namespace Lexicon_LMS.Migrations
                new Course {Name = ".NET", Description = ".NET Vidareutbildning", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 7, 14) },
             };
 
-            context.Courses.AddRange(courses);
-
-            /*
-
-            foreach (var course in courses)
-            {
-                string courseName = course.Name;
-                if (!context.Courses.Any(a => a.Name == courseName))
-                {
-                    context.Courses.Add(course);
-                }
-            }
-
-    */
-
-            context.SaveChanges();                          // ID genereras när man sparar contexten
-
-            int[] courseIds = new int[]
+            context.Courses.AddRange(courses);          
+            context.SaveChanges();                    
+                        
+            int[] courseIds = new int[2]
             {
                 courses[0].Id,
-                courses[1].Id, 
-                // context.Courses.First(c => c.Name == "Java").Id,
-                // context.Courses.First(c => c.Name == ".NET").Id,
-            };
+                courses[1].Id,                
+            };            
 
-            // int courseIdJava = context.Courses.First(c => c.Name == "Java").Id;
-            // int courseIdNET = context.Courses.First(c => c.Name == ".NET").Id;         
-
-
+       
             var modules = new Module[]
-           {
+            {
                new Module {Name = "Java Programmering", Description = "Grundläggande programmering i Java, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 10), EndDate = new DateTime(2017, 5, 5) , CourseId = courseIds[0]},
                new Module {Name = "C# Programmering", Description = "Grundläggande programmering i C#, och genomgång av klassbibliotek", StartDate = new DateTime(2017, 4, 24), EndDate = new DateTime(2017, 5, 19), CourseId = courseIds[1]},
                new Module {Name = "Webbutveckling", Description = "HTML, CSS, och JavaScript", StartDate = new DateTime(2017, 5, 8), EndDate = new DateTime(2017, 5, 19) , CourseId = courseIds[0]},
@@ -101,37 +64,17 @@ namespace Lexicon_LMS.Migrations
                new Module {Name = "Java EE", Description = "Projektarbete i Java EE", StartDate = new DateTime(2017, 5, 29), EndDate = new DateTime(2017, 6, 30) , CourseId = courseIds[0]},
                new Module {Name = "ASP.NET MVC", Description = "Projektarbete i ASP.NET MVC", StartDate = new DateTime(2017, 6, 12), EndDate = new DateTime(2017, 7, 14) , CourseId = courseIds[1]},
 
-           };
+            };
 
             context.Modules.AddRange(modules);
-
-            /*
-
-            foreach (var module in modules)
-            {
-                string moduleName = module.Name;
-                int courseId = module.CourseId;
-
-                if (!context.Modules.Any(m => (m.Name == moduleName) && (m.CourseId == courseId)))
-                {
-                    context.Modules.Add(module);
-                }
-            }
-
-    */
-
-            context.SaveChanges();                          // ID genereras när man sparar contexten
+            context.SaveChanges();
 
             int[] moduleIds = new int[8];
             for (int i = 0; i < moduleIds.Length; i++)
-            {
-                /*
-                string moduleName = modules[i].Name;
-                int courseId = modules[i].CourseId;
-                moduleIds[i] = context.Modules.First(m => (m.Name == moduleName) && (m.CourseId == courseId)).Id;
-                */
-                moduleIds[i] = modules[i].Id;
-            }
+            {       
+               moduleIds[i] = modules[i].Id;
+            }  
+                   
 
             var activities = new Activity[]
             {
@@ -156,24 +99,6 @@ namespace Lexicon_LMS.Migrations
             };
 
             context.Activities.AddRange(activities);
-
-            /*
-
-
-            foreach (var activity in activities)
-            {
-                string activityName = activity.Name;
-                int moduleId = activity.ModuleId;
-
-                if (!context.Activities.Any(a => (a.Name == activityName) && (a.ModuleId == moduleId)))
-                {
-                    context.Activities.Add(activity);
-                }
-            }
-
-    */
-
-
             context.SaveChanges();                          // ID genereras när man sparar contexten
 
 
@@ -200,14 +125,15 @@ namespace Lexicon_LMS.Migrations
             var firstnames = new[] { "Oscar", "Dimitris", "John", "Donald", "Vladimir" };
             var lastnames = new[] { "Jacobsson", "Björlingh", "Hellman", "Trump", "Putin" };
 
-            int courseIndex = 0;
+            int courseIndex = 1; 
 
             for (int i = 0; i < emails.Count(); i++)
             {
                 var email = emails[i];
                 if (!context.Users.Any(u => u.UserName == email))
                 {
-                    courseIndex = 1 - courseIndex;
+
+                    courseIndex = 1 - courseIndex;  
 
                     var user = new ApplicationUser
                     {
@@ -242,7 +168,6 @@ namespace Lexicon_LMS.Migrations
 
             var studentUser2 = userManager.FindByName("vputin@lxicon.se");
             userManager.AddToRole(studentUser2.Id, "student");
-
         }      
 
 
