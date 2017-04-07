@@ -5,7 +5,35 @@
 
     margin-bottom:0;
 }
+   .navbar{
+ min-height: 150px;
+   }
 
+   .my-btn{    
+    color:black;
+}
+    .my-btn:hover { 
+  border-color: #C0C0C0; 
+  background-color: red; 
+  color:white;
+}
+
+ .my-btn:active { 
+  border-color: #C0C0C0; 
+  background-color: red; 
+  color:white;
+}
+
+   #myID{
+       width:100%;
+   }
+   .container{
+       width:100%;
+
+   }
+   .body-content {
+   width:100%;
+}
 @media screen and (min-width: 1240px) {
 
     div.botbar {
