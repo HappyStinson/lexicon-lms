@@ -1,31 +1,33 @@
 ﻿@model Lexicon_LMS.Models.ActivityType
 
 @{
-    ViewBag.Title = "Ta bort";
+    ViewBag.Title = "Ta bort aktivitetstyp";
 }
 
 <h2>Aktivitetstyp - <u>Ta bort</u></h2>
 
-<h3>Är du säker på att du vill ta bort aktivitetstypen ?</h3>
+<h3>Är du säker på att du vill ta bort aktivitetstypen "@Model.Name"?</h3>
 <div>
     <h4></h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
+  <h3>Följande aktiviteter är knutna till aktivitetstypen och kommer att tas bort:</h3>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        @foreach (var activity in Model.Activities)
+        {
+            <h5>@activity.Name i @activity.Module.Name i kursen @activity.Module.Course.Name</h5>
+        }
+      </div>
+    </div>
+  </div>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            <input type="submit" value="Ta bort" class="btn btn-danger" /> |
             @Html.ActionLink("Tillbaka till översikten av aktivitetstyper", "Index")
         </div>
     }
