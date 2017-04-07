@@ -1,14 +1,71 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.UserViewModel>
-
 @if (User.IsInRole("teacher"))
 {
-  ViewBag.Title = "Användare";
-
-    <h2>Användare</h2>
+    ViewBag.Title = "Användare";
 }
 else
 {
-  ViewBag.Title = "Klasskamrater";
+    ViewBag.Title = "Klasskamrater";
+}
+
+<h2>Lärare</h2>
+<table class="table sortable table-hover table-striped">
+    <thead>
+        <tr>
+            @if (User.IsInRole("teacher"))
+            {
+                <th>
+                    @Html.DisplayNameFor(user => user.CourseName)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(user => user.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(user => user.Email)
+            </th>          
+        </tr>
+    </thead>
+
+    @foreach (var user in Model)
+    {
+        if (user.Role == "Lärare")
+        {
+        <tr>
+            @if (User.IsInRole("teacher"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => user.CourseName)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => user.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Email)
+            </td>           
+            @if (User.IsInRole("teacher"))
+            {
+                <td>
+                    @Html.ActionLink("Ändra", "Edit", new { id = user.Id })
+                    @if (!ViewBag.CurrentUserId.Equals(user.Id))
+                    {
+                        @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
+                    }
+                </td>
+            }
+        </tr>
+        }
+    }
+
+</table>
+
+@if (User.IsInRole("teacher"))
+{ 
+    <h2>Elever</h2>
+}
+else
+{ 
     <h2>Klasskamrater</h2>
 }
 <table class="table sortable table-hover table-striped">  
@@ -25,15 +82,14 @@ else
             </th>
             <th>
                 @Html.DisplayNameFor(user => user.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(user => user.Role)
-            </th>
+            </th>          
         </tr>
     </thead>
 
         @foreach (var user in Model)
         {
+            if (user.Role == "Elev")
+            {
             <tr>
                 @if (User.IsInRole("teacher"))
                 {
@@ -46,11 +102,7 @@ else
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => user.Email)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => user.Role)
-                </td>
+                </td>               
                 @if (User.IsInRole("teacher"))
                 {
                     <td>
@@ -62,6 +114,7 @@ else
                     </td>
                 }
             </tr>
+            }
         }
 
     </table>
