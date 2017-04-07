@@ -42,11 +42,12 @@
     <div class="container body-content">
         <nav role="navigation" id="nav">
             <div class="container">
-                <a href="@Url.Action("Start", "Account")" class="btn-primary">Start</a>   
-                @Html.ActionLink("Hantera aktivitetstyper", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @class = "btn-primary" })
+                <a href="@Url.Action("Start", "Account")" class="btn btn-primary btn-xs">Start</a>
+                <a href="@Url.Action("Users", "Account")" class="btn btn-primary btn-xs">Klasslista</a>   
+                @Html.ActionLink("Hantera aktivitetstyper", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
                 @if (User.IsInRole("teacher"))
                 {
-                    <a href="@Url.Action("Register", "Account")" class="btn-primary">Registrera användare</a>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-primary btn-xs">Registrera användare</a>
                 }
             </div>
         </nav>
