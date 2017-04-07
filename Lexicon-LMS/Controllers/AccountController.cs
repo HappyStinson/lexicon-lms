@@ -579,7 +579,7 @@ namespace Lexicon_LMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Courses");
+            return RedirectToAction("Start", "Account");
         }
 
         //

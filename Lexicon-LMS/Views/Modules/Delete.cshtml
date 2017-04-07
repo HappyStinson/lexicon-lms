@@ -1,7 +1,7 @@
 ﻿@model Lexicon_LMS.Models.Module
 
 @{
-    ViewBag.Title = "Ta bort";
+    ViewBag.Title = "Ta bort modul";
 }
 
 <h2>Modul - <u>Ta bort</u></h2>
@@ -28,14 +28,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
 
@@ -51,14 +43,37 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
     </dl>
+
+  <h3>Följande aktiviteter är knutna till modulen och kommer att tas bort:</h3>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"><h4>Aktiviteter</h4></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        @foreach (var activity in Model.Activities)
+        {
+            <h5>@activity.Name</h5>
+        }
+      </div>
+    </div>
+  </div>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Ta bort" class="btn btn-danger" />
-            @Html.ActionLink("Tillbaka till kursens editeringsvy", "Edit", "Courses", new { id = Model.CourseId }, null)
         </div>
     }
 </div>
