@@ -34,8 +34,9 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka till översikten av aktivitetstyper", "Index")
+    @Html.ActionLink("Tillbaka till översikten av aktivitetstyper", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @class = "btn-primary" })
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
