@@ -1,12 +1,14 @@
-﻿@model Lexicon_LMS.Models.Course
+﻿@*@using Lexicon_LMS.Models;*@
+@model Lexicon_LMS.Models.Course
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Ta bort kurs";
 }
 
 <h2>Kurs - <strong><u>ta bort</u></strong></h2>
 
 <h3>Är du säker på att du vill ta bort denna kurs?</h3>
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -16,6 +18,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>
@@ -33,22 +43,43 @@
         <dd>
             @Html.DisplayFor(model => model.EndDate)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
     </dl>
+
+  <h3>Följande moduler, aktiviteter och kursdeltagare är knutna till kursen och kommer att tas bort:</h3>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6"><h4>Kursmoduler och aktiviteter</h4></div>
+      <div class="col-md-6"><h4>Kursdeltagare</h4></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        @foreach (var module in Model.Modules)
+        {
+            <h5>@module.Name</h5>
+
+          foreach (var activity in module.Activities)
+          {
+                <h6>@activity.Name</h6>
+          }
+        }
+      </div>
+
+      <div class="col-md-6">
+        @foreach (var user in Model.Users)
+        {
+            <p>@user.FullName</p>
+        }
+      </div>
+    </div>
+  </div>
+  
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" />
+            <input type="submit" value="Ta bort" class="btn btn-danger" />
         </div>
     }
 </div>

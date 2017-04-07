@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Lexicon_LMS.Models;
+using System.Collections.Generic;
+using System.Net;
 
 namespace Lexicon_LMS.Controllers
 {
@@ -65,14 +67,170 @@ namespace Lexicon_LMS.Controllers
                 return RedirectToAction("Login");
         }
 
-        // GET: /Account/Users
         public ActionResult Users()
         {
-            var users = db.Users; 
+            var users = db.Users.ToList();
 
-            return View(users.ToList());
-        }             
+            if (User.IsInRole("student"))
+            {
+                var userId = User.Identity.GetUserId();
+                var courseId = db.Users.First(u => u.Id == userId).CourseId;
+                users = users.Where(u => u.CourseId == courseId).ToList();
+            }
 
+            var userViewModel = new List<UserViewModel>();
+            foreach (var user in users)
+            {
+                var role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev";
+
+                userViewModel.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    CourseName = user.Course.Name,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Role = role
+                });
+            }
+
+            ViewBag.CurrentUserId = User.Identity.GetUserId();
+
+            return View(userViewModel);
+        }
+
+        // GET: Account/Edit/GUID
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var currentRoleName = UserManager.GetRoles(id).FirstOrDefault();
+
+            var viewModel = new EditUserViewModel
+            {
+                Id = user.Id,
+                CourseId = user.CourseId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                CurrentRoleName = currentRoleName
+            };
+            
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", user.CourseId);
+
+            ViewBag.CanEditRole = (user.Id == User.Identity.GetUserId()) ? false : true;
+            if (ViewBag.CanEditRole)
+                ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name", currentRoleName);
+            else
+                viewModel.RoleName = currentRoleName;
+
+            return View(viewModel);
+        }
+
+        // POST: Account/Edit/GUID
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditUserViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = UserManager.FindById(viewModel.Id);
+                user.UserName = viewModel.Email;
+                user.Email = viewModel.Email;
+                user.CourseId = viewModel.CourseId;
+                user.FirstName = viewModel.FirstName;
+                user.LastName = viewModel.LastName;
+
+                IdentityResult result = null;
+                var modelError = false;
+                if (!viewModel.CurrentRoleName.Equals(viewModel.RoleName))
+                {
+                    result = UserManager.RemoveFromRole(user.Id, viewModel.CurrentRoleName);
+                    if (result.Succeeded)
+                    {
+                        result = UserManager.AddToRole(user.Id, viewModel.RoleName);
+                        if (!result.Succeeded)
+                        {
+                            AddErrors(result);
+                            modelError = true;
+                        }
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                        modelError = true;
+                    }
+                }
+
+                result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded && !modelError)
+                {                    
+                    return RedirectToAction("Users");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.CanEditRole = (viewModel.Id == User.Identity.GetUserId()) ? false : true;
+            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", viewModel.CourseId);
+            ViewBag.RoleName = new SelectList(db.Roles, "Name", "Name", viewModel.RoleName);
+            return View(viewModel);
+        }
+
+        // GET: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = UserManager.FindById(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (user.Id.Equals(User.Identity.GetUserId()))
+                return RedirectToAction("Users");
+
+            var viewModel = new UserViewModel
+            {
+                Id = user.Id,
+                CourseName = user.Course.Name,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = UserManager.IsInRole(user.Id, "teacher") ? "Lärare" : "Elev"
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: Account/Delete/GUID
+        [Authorize(Roles = "teacher")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            var user = UserManager.FindById(id);
+
+            var result = await UserManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+            }
+
+            return RedirectToAction("Users");
+        }
 
         //
         // GET: /Account/Login
@@ -421,7 +579,7 @@ namespace Lexicon_LMS.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Courses");
+            return RedirectToAction("Start", "Account");
         }
 
         //

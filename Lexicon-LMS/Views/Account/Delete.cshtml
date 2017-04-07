@@ -1,0 +1,28 @@
+﻿@model Lexicon_LMS.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Ta bort användare";
+}
+
+<h2>Användare - <strong><u>ta bort</u></strong></h2>
+
+<h3>Är du säker på att du vill ta bort denna användare?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.FullName) - 
+            @Html.DisplayFor(model => model.Role) i
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort" class="btn btn-danger" /> |
+            @Html.ActionLink("Visa alla användare", "Users")
+        </div>
+    }
+</div>

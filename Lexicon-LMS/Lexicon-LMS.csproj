@@ -177,10 +177,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ClaimsExtension.cs" />
-    <Compile Include="Migrations\201703300909550_init.cs" />
-    <Compile Include="Migrations\201703300909550_init.Designer.cs">
-      <DependentUpon>201703300909550_init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -276,6 +272,8 @@
     <Content Include="Views\ActivityTypes\Edit.cshtml" />
     <Content Include="Views\ActivityTypes\Index.cshtml" />
     <Content Include="Views\Account\Users.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -287,11 +285,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703300909550_init.resx">
-      <DependentUpon>201703300909550_init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

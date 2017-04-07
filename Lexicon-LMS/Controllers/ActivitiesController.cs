@@ -18,8 +18,7 @@ namespace Lexicon_LMS.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
-            return View(activities.ToList());
+            return RedirectToAction("Start", "Account");
         }
 
         // GET: Activities/Details/5
