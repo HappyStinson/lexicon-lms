@@ -11,55 +11,57 @@ else
   ViewBag.Title = "Klasskamrater";
     <h2>Klasskamrater</h2>
 }
-<table class="table">
-  <tr>
-    @if (User.IsInRole("teacher"))
-    {
-        <th>
-          @Html.DisplayNameFor(user => user.CourseName)
-        </th>
-    }
-    <th>
-      @Html.DisplayNameFor(user => user.FullName)
-    </th>
-    <th>
-      @Html.DisplayNameFor(user => user.Email)
-    </th>
-    <th>
-      @Html.DisplayNameFor(user => user.Role)
-    </th>
-  </tr>
-
-  @foreach (var user in Model)
-  {
-      <tr>
-        @if (User.IsInRole("teacher"))
-        {
-            <td>
-              @Html.DisplayFor(modelItem => user.CourseName)
-            </td>
-        }
-        <td>
-          @Html.DisplayFor(modelItem => user.FullName)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => user.Email)
-        </td>
-
-        <td>
-          @Html.DisplayFor(modelItem => user.Role)
-        </td>
-        @if (User.IsInRole("teacher"))
-        {
-            <td>
-              @Html.ActionLink("Ändra", "Edit", new { id = user.Id })
-              @if (!ViewBag.CurrentUserId.Equals(user.Id))
-              {
-              @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
+<table class="table sortable table-hover table-striped">  
+    <thead>
+        <tr>
+            @if (User.IsInRole("teacher"))
+            {
+                <th>
+                    @Html.DisplayNameFor(user => user.CourseName)
+                </th>
             }
-            </td>
-        }
-      </tr>
-  }
+            <th>
+                @Html.DisplayNameFor(user => user.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(user => user.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(user => user.Role)
+            </th>
+        </tr>
+    </thead>
 
-</table>
+        @foreach (var user in Model)
+        {
+            <tr>
+                @if (User.IsInRole("teacher"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => user.CourseName)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => user.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Email)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => user.Role)
+                </td>
+                @if (User.IsInRole("teacher"))
+                {
+                    <td>
+                        @Html.ActionLink("Ändra", "Edit", new { id = user.Id })
+                        @if (!ViewBag.CurrentUserId.Equals(user.Id))
+                        {
+                            @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
+                        }
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
