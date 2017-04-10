@@ -11,6 +11,7 @@
 
    .my-btn{    
     color:black;
+    text-transform: uppercase;
 }
     .my-btn:hover { 
   border-color: #C0C0C0; 
