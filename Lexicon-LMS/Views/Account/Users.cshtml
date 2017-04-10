@@ -23,7 +23,12 @@ else
             </th>
             <th>
                 @Html.DisplayNameFor(user => user.Email)
-            </th>          
+            </th>               
+            @if (User.IsInRole("teacher"))
+            {
+                <th data-defaultsort='disabled'>
+                </th>
+            }           
         </tr>
     </thead>
 
