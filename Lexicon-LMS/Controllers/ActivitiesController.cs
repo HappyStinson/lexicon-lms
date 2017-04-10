@@ -99,26 +99,22 @@ namespace Lexicon_LMS.Controllers
                 var showInfo = false;
 
                 if (module.StartDate.CompareTo(viewModel.StartDate) == 1)
-                {
-                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa innan modulen startar");
+                {                   
                     showInfo = true;
                 }
 
                 if (module.StartDate.CompareTo(viewModel.EndDate) == 1)
-                {
-                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa innan modulen startar");
+                {                   
                     showInfo = true;
                 }
 
                 if (viewModel.EndDate.CompareTo(module.EndDate) == 1)
-                {
-                    ModelState.AddModelError("EndDate", "Aktivitetens Slutdatum kan inte inträffa efter att modulen har slutat");
+                {                   
                     showInfo = true;
                 }
 
                 if (viewModel.StartDate.CompareTo(module.EndDate) == 1)
-                {
-                    ModelState.AddModelError("StartDate", "Aktivitetens Startdatum kan inte inträffa efter att modulen har slutat");
+                {                    
                     showInfo = true;
                 }
 
