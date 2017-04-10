@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Lexicon_LMS.Models;
 
 namespace Lexicon_LMS.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "teacher")]
     public class ActivityTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

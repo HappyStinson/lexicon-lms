@@ -1,48 +1,43 @@
 ﻿@using Lexicon_LMS.Models;
-@model Lexicon_LMS.Models.Course
+@model Course
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detaljerad kursinformation för " + Html.DisplayFor(model => model.Name);
 }
 
-<h2>Kurs - <strong><u>detaljer</u></strong></h2>
-<h2>
-    Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
-</h2>
+<h2>Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)</h2>
 
-@if (DateTime.Now.CompareTo(Model.StartDate) == 1 && Model.EndDate.CompareTo(DateTime.Now) == 1)
-{
-    <h3>Pågående Modul:@ViewBag.ShowModuleContent</h3>
+<div class="col-md-5">
 
+  <dt>
+    @Html.DisplayNameFor(model => model.StartDate) - @Html.DisplayNameFor(model => model.EndDate)
+  </dt>
 
-<h3>Pågående Aktiviteter:</h3>
+  <dd>
+    @Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)
+  </dd>
+  <br />
 
-    foreach (var item in ViewBag.ShowActivityContent as ICollection<Activity>)
-    {
-         @item.Name
+  <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+  <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+  @if (DateTime.Now.CompareTo(Model.StartDate) == 1 && Model.EndDate.CompareTo(DateTime.Now) == 1)
+  {
+      <h3>Pågående modul:</h3>
+      <h4>@ViewBag.ShowModuleContent</h4>
+
+      <h3>Pågående aktiviteter:</h3>
+
+      foreach (var item in ViewBag.ShowActivityContent as ICollection<Activity>)
+      {
+        @item.Name
         <br />
+      }
+  <br />
+  }
 
-    }
-<br />
-}
-<hr />
-
-<div class="col-md-4">
-    <dt>
-        @Html.DisplayNameFor(model => model.StartDate) - @Html.DisplayNameFor(model => model.EndDate)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.StartDate) - @Html.DisplayFor(model => model.EndDate)
-    </dd>
-    <br />
-
-
-    <dt>@Html.DisplayNameFor(model => model.Description)</dt>
-    <dd>@Html.DisplayFor(model => model.Description)</dd>
-    <br />
 </div>
-<div class="col-md-1"></div>
+
 <div class="col-md-7">
     <h4>Kursmoduler</h4>
 

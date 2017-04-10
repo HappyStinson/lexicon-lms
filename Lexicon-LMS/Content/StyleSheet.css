@@ -1,12 +1,12 @@
 ﻿body{
   
-    padding-top: 150px; /*50px*/
-    padding-bottom: 5%;  /*20px*/
+    padding-top: 0;
+    padding-bottom: 5%;
 
     margin-bottom:0;
 }
    .navbar{
- min-height: 150px;
+ margin-bottom: 0;
    }
 
    .my-btn{    
@@ -90,7 +90,7 @@ footer{
 #nav {
     float: left;
     width: 100%;
-    padding: 10px 12px 20px 12px;
+    padding: 10px 12px 10px 12px;
     background-color: #f6f6f6;
     border-bottom: 1px solid #808080;
     box-sizing: border-box;

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Lexicon_LMS.Models
 {
@@ -36,7 +33,6 @@ namespace Lexicon_LMS.Models
 
         // Navigation properties        
         public virtual ActivityType Type { get; set; }
-        public virtual Module Module { get; set; }      
-
+        public virtual Module Module { get; set; }
     }
 }
