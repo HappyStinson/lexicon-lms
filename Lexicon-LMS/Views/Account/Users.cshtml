@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Lexicon_LMS.Models.UserViewModel>
-@if (User.IsInRole("teacher"))
+@{if (User.IsInRole("teacher"))
 {
     ViewBag.Title = "Användare";
 }
@@ -7,10 +7,14 @@ else
 {
     ViewBag.Title = "Klasskamrater";
 }
+}
 
-<h2>Lärare</h2>
-<table class="table sortable table-hover table-striped">
-    <thead>
+@{ var teachers = Model.Where(u => u.Role == "Lärare");
+    if (teachers.Any())
+    {
+        <h2>Lärare</h2>
+        <table class="table sortable table-hover table-striped">
+        <thead>
         <tr>
             @if (User.IsInRole("teacher"))
             {
@@ -30,12 +34,10 @@ else
                 </th>
             }           
         </tr>
-    </thead>
+        </thead>
 
-    @foreach (var user in Model)
+    @foreach (var user in teachers)
     {
-        if (user.Role == "Lärare")
-        {
         <tr>
             @if (User.IsInRole("teacher"))
             {
@@ -48,32 +50,39 @@ else
             </td>
             <td>
                 @Html.DisplayFor(modelItem => user.Email)
-            </td>           
+            </td>
             @if (User.IsInRole("teacher"))
             {
                 <td>
                     @Html.ActionLink("Ändra", "Edit", new { id = user.Id })
                     @if (!ViewBag.CurrentUserId.Equals(user.Id))
                     {
-                        @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
+                    @Html.ActionLink("Ta bort", "Delete", new { id = user.Id })
                     }
                 </td>
             }
         </tr>
-        }
     }
 
 </table>
+<br>
+    }
+}
 
-@if (User.IsInRole("teacher"))
-{ 
-    <h2>Elever</h2>
-}
-else
-{ 
-    <h2>Klasskamrater</h2>
-}
-<table class="table sortable table-hover table-striped">  
+@{ var students = Model.Where(u => u.Role == "Elev");
+    if (students.Any())
+    {       
+            if (User.IsInRole("teacher"))
+            {
+                <h2>Elever</h2>
+            }
+            else
+            {
+                <h2>Klasskamrater</h2>
+            }
+                
+
+    <table class="table sortable table-hover table-striped">  
     <thead>
         <tr>
             @if (User.IsInRole("teacher"))
@@ -91,10 +100,8 @@ else
         </tr>
     </thead>
 
-        @foreach (var user in Model)
+        @foreach (var user in students)
         {
-            if (user.Role == "Elev")
-            {
             <tr>
                 @if (User.IsInRole("teacher"))
                 {
@@ -119,7 +126,10 @@ else
                     </td>
                 }
             </tr>
-            }
+
         }
 
     </table>
+    }
+}
+   
