@@ -10,66 +10,73 @@
 
 </head>
 
-    <body>
-
-    
-        
+<body>
 
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-
-            <div class="container">
 
 
-                <div class="navbar-header">
-                    <a href="@Url.Action("Start", "Account")" class="navbar-brand">
-                        <img src="~/Content/Images/download.png" title="title" alt="additional title" height="80" />
-                    </a>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
 
-                </div>
-               
+    <div class="navbar navbar-inverse navbar-fixed-top">
 
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav"></ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
+        <div class="container">
+
+
+            <div class="navbar-header">
+                <a href="@Url.Action("Start", "Account")" class="navbar-brand">
+                    <img src="~/Content/Images/download.png" title="title" alt="additional title" height="80" />
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
-@if (Request.IsAuthenticated)
-{
+    </div>
+    @if (Request.IsAuthenticated)
+    {
         <div class="navbar">
             <nav role="navigation" id="nav">
                 <div class="container">
-                    <a href="@Url.Action("Start", "Account")" class="btn btn-default btn-xs my-btn">Start</a>
-                    <a href="@Url.Action("Users", "Account")" class="btn btn-default btn-xs my-btn">Klasslista</a>
-                    @Html.ActionLink("Hantera aktivitetstyper", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-xs my-btn" })
-                    @if (User.IsInRole("teacher"))
-                    {
-                        <a href="@Url.Action("Register", "Account")" class="btn btn-default btn-xs my-btn">Registrera användare</a>
-                    }
+
+                    <div class="min">
+                        <a href="@Url.Action("Start", "Account")" class="btn btn-default btn-xs my-btn" onclick="MyFunc()">START</a>
+                        <a href="@Url.Action("Users", "Account")" class="btn btn-default btn-xs my-btn" onclick="MyFunc()">KLASSLISTA</a>
+                        @Html.ActionLink("HANTERA AKTIVITETSTYPER", "Index", "ActivityTypes", routeValues: null, htmlAttributes: new { @id = "btn-auto", @class = "btn btn-default btn-xs my-btn", onclick = "MyFunc()" })
+
+                       
+                        @if (User.IsInRole("teacher"))
+                        {
+                            <a href="@Url.Action("Register", "Account")" class="btn btn-default btn-xs my-btn">REGISTRERA ANVÄNDARE</a>
+                        }
+                    </div>
                 </div>
+
             </nav>
 
-           
-        </div>
- }
-        <div class="container body-content">
-          
-
-
-            @RenderBody()
-            <hr />
 
         </div>
+    }
+    <div class="container body-content">
 
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
+
+        @RenderBody()
+        <hr />
+
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+
 </html>
