@@ -10,17 +10,21 @@
     Detaljerad kursinformation för @Html.DisplayFor(model => model.Name)
 </h2>
 
-<h3>Pågående Modul:@ViewBag.ShowModuleContent</h3>
+@if (DateTime.Now.CompareTo(Model.StartDate) == 1 && Model.EndDate.CompareTo(DateTime.Now) == 1)
+{
+    <h3>Pågående Modul:@ViewBag.ShowModuleContent</h3>
+
 
 <h3>Pågående Aktiviteter:</h3>
 
-    @foreach (var item in ViewBag.ShowActivityContent as ICollection<Activity>)
+    foreach (var item in ViewBag.ShowActivityContent as ICollection<Activity>)
     {
          @item.Name
         <br />
-      
+
     }
 <br />
+}
 <hr />
 
 <div class="col-md-4">
