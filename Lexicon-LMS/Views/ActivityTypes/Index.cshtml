@@ -6,9 +6,12 @@
 
 <h2>Översikt av aktivitetstyper</h2>
 
+@if (User.IsInRole("teacher"))
+{
 <p>
     <a href="create" class="btn btn-info" role="button">Lägg till en ny aktivitetstyp</a>
 </p>
+}
 <table class="table sortable table-hover table-striped">
      <thead>
             <tr>
@@ -26,13 +29,15 @@
               <td>
                   @Html.DisplayFor(modelItem => item.Name)
               </td>
+              @if (User.IsInRole("teacher"))
+              {
               <td>
                   @Html.ActionLink("Ändra", "Edit", new { id = item.Id }) |
                   @Html.ActionLink("Ta bort", "Delete", new { id = item.Id })
               </td>
+              }
           </tr>
       }
-
-</table>
+    </table>
 
 
