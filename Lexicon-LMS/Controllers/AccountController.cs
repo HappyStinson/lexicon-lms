@@ -349,7 +349,7 @@ namespace Lexicon_LMS.Controllers
                         role = "teacher";
 
                     UserManager.AddToRole(user.Id, role);
-                    return RedirectToAction("Register");
+                    return RedirectToAction("Users");
                 }
                 AddErrors(result);
             }
