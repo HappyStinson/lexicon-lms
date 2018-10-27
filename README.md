@@ -10,6 +10,6 @@ Simple Learning management system. This was the final assignment in Lexicon cont
 
 Administer courses, course modules and module activities.
 
-Developed together with [Jonas Lindström](https://github.com/x), [Nils Runske](https://github.com/niru22) and [Leo Lazcano](https://github.com/AG-sida).
+Developed together with [Jonas Lindström](https://www.linkedin.com/in/jonashlindstrom), [Nils Runske](https://github.com/niru22) and [Leo Lazcano](https://github.com/AG-sida).
 
-![](lexicon-lms/Documents/Redovisning/demo.PNG)
+![](https://github.com/happystinson/lexicon-lms/Documents/Redovisning/demo.PNG)
